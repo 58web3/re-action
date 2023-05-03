@@ -1,0 +1,119 @@
+.main-title {
+  font-family: "Noto Sans", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 100%;
+  letter-spacing: 0.1em;
+  color: $black;
+}
+.head-title {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 42px;
+  line-height: 100%;
+  /* identical to box height, or 48px */
+
+  letter-spacing: 0.03em;
+
+  color: $black;
+}
+.wallet {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 180%;
+  /* or 23px */
+
+  text-align: center;
+
+  color: $black;
+}
+.card-title {
+  font-family: "Noto Sans", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0.1em;
+  color: $black;
+}
+
+.card-sub-title {
+  font-family: "Noto Sans";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 140%;
+  text-align: center;
+
+  color: $black;
+}
+
+.link {
+  font-family: "Noto Sans";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 140%;
+  /* identical to box height, or 17px */
+  text-align: center;
+
+  color: $black;
+}
+
+.error-text {
+  margin: 4px;
+  color: #ff6969;
+}
+
+.error-text-small {
+  margin: 4px;
+  font-size: 14px;
+  color: #ff6969;
+}
+
+.weak-text {
+  font-size: 12px !important;
+  color: #888 !important;
+}
+
+.medium-text {
+  font-size: 16px !important;
+  font-weight: 600;
+}
+
+.strong-text {
+  font-size: 22px !important;
+  font-weight: 600;
+}
+
+.text-white {
+  color: $white !important;
+}
+
+.text-blue {
+  color: #1da1f2 !important;
+}
+
+.text-pink {
+  color: #ff1694 !important;
+}
+
+.text-black {
+  color: #000 !important;
+}
+
+.text-main {
+  font-size: 1.5em;
+  font-weight: 700;
+  color: #1da1f2;
+}
+
+.text-overflow-ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

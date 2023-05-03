@@ -1,0 +1,9 @@
+Wallet: 
+  type: object
+  properties:
+    wallet_address:
+      type: string
+      example: "0x67dF41d7Df0b07EcC985D87E093D48bbbab68E74"
+    wallet_public_key:
+      type: string
+      example: "035143318b83eb5d31611f8c03582ab1200494f66f5e11a67c34f5581f48c1b70b"

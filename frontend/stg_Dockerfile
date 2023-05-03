@@ -1,0 +1,31 @@
+# ビルド環境
+FROM --platform=linux/amd64 node:16.19.1-alpine as build-stage
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+COPY ./web3auth_bugfix/@web3auth/wallet-connect-v1-adapter/dist/walletConnectV1Adapter.esm.js ./node_modules/@web3auth/wallet-connect-v1-adapter/dist/walletConnectV1Adapter.esm.js
+RUN npm run build-staging
+
+# 本番環境
+FROM --platform=linux/amd64 nginx:1.23.3 as production-stage
+COPY --from=build-stage /app/dist /usr/share/nginx/html
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx/error.html /usr/share/nginx/html/error.html
+COPY nginx/robots.txt /usr/share/nginx/html/robots.txt
+
+## Basic auth
+## user name:renft-user, password: renft2023
+RUN echo "renft-user:$(openssl passwd -apr1 renft2023)" >> /etc/nginx/.htpasswd
+
+RUN chown -R nginx:nginx /usr/share/nginx && \
+        chown -R nginx:nginx /var/cache/nginx && \
+        chown -R nginx:nginx /var/log/nginx && \
+        chown -R nginx:nginx /etc/nginx/conf.d
+RUN touch /var/run/nginx.pid && \
+        chown -R nginx:nginx /var/run/nginx.pid
+
+USER nginx
+
+EXPOSE 8080
+CMD ["nginx", "-g", "daemon off;"]

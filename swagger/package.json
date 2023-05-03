@@ -1,0 +1,20 @@
+{
+  "name": "swagger",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "gulp",
+    "build": "gulp build"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^8.3.0",
+    "glob": "^7.2.0",
+    "gulp": "^4.0.2",
+    "gulp-rename": "^2.0.0",
+    "js-yaml": "^4.1.0",
+    "json-refs": "^3.0.15",
+    "multi-file-swagger": "^2.3.0",
+    "through2": "^4.0.2"
+  }
+}

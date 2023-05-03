@@ -1,0 +1,9 @@
+ResponseLogin:
+  type: object
+  properties:
+    message:
+      type: string
+    transfer_fails:
+      type: array
+      items:
+        $ref: '#/components/schemas/TransferFail'

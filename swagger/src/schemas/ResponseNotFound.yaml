@@ -1,0 +1,6 @@
+ResponseNotFound:
+  type: object
+  properties:
+    message:
+      type: string
+      example: Not Found

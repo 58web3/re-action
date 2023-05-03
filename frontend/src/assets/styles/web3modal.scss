@@ -1,0 +1,61 @@
+.w3ajs-email-passwordless-form {
+  flex-direction: column;
+}
+
+.w3a-parent-container #w3a-modal {
+  z-index: 3;
+}
+
+.w3a-parent-container #w3a-modal button.w3a-button-expand {
+  display: none;
+}
+
+.w3ajs-email-passwordless {
+  display: none;
+}
+
+.w3a-parent-container #w3a-modal .w3a-modal__inner {
+  min-height: 430px;
+}
+
+// .w3ajs-wallet-connect.w3a-wallet-connect {
+//   display: none !important;
+// }
+
+.w3a-parent-container .col-span-1 {
+  grid-column: span 3 / span 3 !important;
+}
+@media all and (max-width: 480px) {
+  .w3ajs-wallet-adapters .w3a-adapter-item {
+    grid-column: span 3 / span 3 !important;
+    &:not(:last-child) {
+      display: none !important;
+    }
+  }
+}
+
+#w3a-modal .w3a-footer__secured > img {
+  display: none !important;
+}
+#w3a-modal .w3a-header__logo {
+  content: url("@/assets/img/logo-square-small.png") !important;
+  height: 55px;
+}
+
+.w3a-display-none {
+  display: none;
+}
+
+.w3a-parent-container #w3a-modal .w3a-wallet-connect {
+  display: none!important;
+}
+
+@media screen and (max-width:768px) { 
+  .w3ajs-external-wallet {
+    display: none;
+  }
+
+  .metamask-login .w3ajs-external-wallet {
+    display: block;
+  }
+}

@@ -1,0 +1,40 @@
+name: API Test Develop
+
+on:
+  push:
+    branches:
+      - 'feature/**'
+  pull_request:
+    types:
+      - reopened
+    branches:
+      - 'develop'
+    paths:
+      - 'api/**'
+
+defaults:
+  run:
+    working-directory: api
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [ 16 ]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: yarn install
+      - run: yarn test
+        env:
+          USE_DYNAMODB_LOCAL: true
+          DYNAMODB_REGION: ap-northeast-1
+          DYNAMODB_LOCAL_URL: http://localhost:8000
+          RUN_MODE: test

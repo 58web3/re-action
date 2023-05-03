@@ -1,0 +1,6 @@
+ResponseForbidden:
+  type: object
+  properties:
+    message:
+      type: string
+      example: Forbidden

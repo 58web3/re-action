@@ -1,0 +1,10 @@
+NFTListResponse:
+  type: object
+  properties:
+    total: 
+      type: number
+      example: 16
+    result: 
+      type: array
+      items:
+        $ref: '#/components/schemas/NFT'

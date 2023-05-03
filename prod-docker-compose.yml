@@ -1,0 +1,24 @@
+version: "3.8"
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ./prod_Dockerfile
+    image: renft/frontend
+    container_name: frontend
+    tty: true
+    environment:
+      - NODE_ENV=production
+    ports:
+      - 8080:8080
+  api:
+    build:
+      context: ./api
+      dockerfile: ./prod_Dockerfile
+    image: renft/api
+    container_name: api
+    tty: true
+    environment:
+      - NODE_ENV=production
+    ports:
+      - 8888:8888

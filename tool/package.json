@@ -1,0 +1,24 @@
+{
+  "name": "tool",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "target": "ES2015",
+  "license": "MIT",
+  "scripts": {
+    "dev-upload-to-ipfs": "NODE_ENV=development node src/upload-metadata-to-ipfs.js",
+    "stg-upload-to-ipfs": "NODE_ENV=staging node src/upload-metadata-to-ipfs.js",
+    "prod-upload-to-ipfs": "NODE_ENV=production node src/upload-metadata-to-ipfs.js",
+    "dev-import-csv-to-dynamodb": "NODE_ENV=development node src/import-csv-to-dynamodb.js",
+    "stg-import-csv-to-dynamodb": "NODE_ENV=staging node src/import-csv-to-dynamodb.js",
+    "prod-import-csv-to-dynamodb": "NODE_ENV=production node src/import-csv-to-dynamodb.js"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.272.0",
+    "csv-parse": "^5.3.5",
+    "csv-writer": "^1.6.0",
+    "dotenv": "^16.0.3",
+    "ipfs": "^0.66.0",
+    "ipfs-http-client": "^60.0.0"
+  }
+}

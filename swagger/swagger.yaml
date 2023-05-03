@@ -1,0 +1,615 @@
+openapi: 3.0.3
+info:
+  title: Social Good Web3 system
+  description: Social Good API
+  version: 1.0.0
+servers:
+  - url: http://localhost:50001
+    description: API Mock
+paths:
+  /v1/wallet/{wallet_address}/user_id:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Wallet
+      summary: Get User ID by wallet_address
+      operationId: getUserIdByWalletAddress
+      parameters:
+        - name: jwt
+          in: header
+          description: IdToken
+          required: true
+          schema:
+            type: string
+          example: Bearer eyxxx
+        - name: public_key
+          in: header
+          description: Public Key
+          required: true
+          schema:
+            type: string
+          example: 02d9fbeeb08f28182c10733f79180bcace5ef68b2841c83252e3574be1d97492e2
+        - name: wallet_address
+          in: path
+          description: Wallet Address
+          required: true
+          schema:
+            type: string
+          example: '0x60f80121c31a0d46b5279700f9df786054aa5ee6'
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletUser'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseUnauthorized'
+        '500':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseInternalServerError'
+  /v1/wallet/{wallet_address}/nft:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Wallet
+      summary: Get all or only relevant
+      operationId: getNftsByWalletAddress
+      parameters:
+        - name: jwt
+          in: header
+          description: IdToken
+          required: true
+          schema:
+            type: string
+          example: Bearer eyxxx
+        - name: public_key
+          in: header
+          description: Public Key
+          required: true
+          schema:
+            type: string
+          example: 02d9fbeeb08f28182c10733f79180bcace5ef68b2841c83252e3574be1d97492e2
+        - name: wallet_address
+          in: path
+          description: WAllet Address
+          required: true
+          schema:
+            type: string
+          example: '0x60f80121c31a0d46b5279700f9df786054aa5ee6'
+        - name: count
+          in: query
+          description: Limit
+          required: false
+          schema:
+            type: number
+          example: 10
+        - name: page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: number
+          example: 0
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NFTListResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseUnauthorized'
+        '500':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseInternalServerError'
+  /v1/user:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - User
+      summary: Create new user
+      operationId: addUser
+      parameters:
+        - name: jwt
+          in: header
+          description: IdToken
+          required: true
+          schema:
+            type: string
+          example: Bearer eyxxx
+        - name: public_key
+          in: header
+          description: Public Key
+          required: true
+          schema:
+            type: string
+          example: 02d9fbeeb08f28182c10733f79180bcace5ef68b2841c83252e3574be1d97492e2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+            example:
+              verification_code: bee17444-88d4-4cc8-b667-2e5759493c07
+              wallet_address: '0x328973ce1433d7593191271f75a428af55c6528f'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+              example:
+                message: Success
+                id_info:
+                  key: user_id
+                  value: 9490ebf5-e378-4074-97d0-3ce5004ae918
+        '400':
+          description: Bad Request(Verification code is already used)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBadRequest'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseUnauthorized'
+        '403':
+          description: Forbidden(Verification code is not verified)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseForbidden'
+        '404':
+          description: Not Found(Verification code is not found)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseNotFound'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseConflict'
+        '500':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseInternalServerError'
+  /v1/user/{user_id}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - User
+      summary: Get user info
+      operationId: getUser
+      parameters:
+        - name: jwt
+          in: header
+          description: IdToken
+          required: true
+          schema:
+            type: string
+          example: Bearer eyxxx
+        - name: public_key
+          in: header
+          description: Public Key
+          required: true
+          schema:
+            type: string
+          example: 02d9fbeeb08f28182c10733f79180bcace5ef68b2841c83252e3574be1d97492e2
+        - name: user_id
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: string
+          example: 9490ebf5-e378-4074-97d0-3ce5004ae918
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              example:
+                message: Success
+                user_id: 9490ebf5-e378-4074-97d0-3ce5004ae918
+                nickname: Satoshi Tanaka
+                type_of_login: email
+                is_sent_token: true
+                is_admin: true
+                user_role_ids:
+                  - '99999'
+                wallets:
+                  - wallet_address: '0x67dF41d7Df0b07EcC985D87E093D48bbbab68E74'
+                    wallet_public_key: >-
+                      0384cdbc234bc15ab15c56d936f83dcc977e8173877b7b1c9abbd429d484f50865
+                created_by: f17f35f5-f654-4fb8-bdfb-be35f0940b0f
+                created_at: 1669182751764
+                updated_by: f17f35f5-f654-4fb8-bdfb-be35f0940b0f
+                updated_at: 1669186466597
+                delete_flg: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseUnauthorized'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseNotFound'
+        '500':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseInternalServerError'
+  /v1/csrf:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - CSRF
+      summary: Refresh CSRF token and return CSRF token
+      operationId: getCsrf
+      parameters:
+        - name: jwt
+          in: header
+          description: IdToken
+          required: true
+          schema:
+            type: string
+          example: Bearer eyxxx
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              example:
+                csrf_token: xyz
+  /v1/verification-code/verify:
+    put:
+      tags:
+        - VerificationCode
+      summary: Verify verification code
+      operationId: verify-verification-code
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                verification_code:
+                  type: string
+                  format: uuid
+      responses:
+        '200':
+          description: verification result (success or fail)
+          content:
+            application/json:
+              example:
+                message: Success
+        '400':
+          description: Bad Request(Verification code is already used)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBadRequest'
+        '404':
+          description: Not Found(Verification code is not found)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseNotFound'
+        '500':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseInternalServerError'
+  /v1/login:
+    post:
+      tags:
+        - Login
+      summary: Process the login to the system
+      operationId: login
+      parameters:
+        - name: jwt
+          in: header
+          description: IdToken
+          required: true
+          schema:
+            type: string
+          example: jwt eyxxx
+        - name: public_key
+          in: header
+          description: Public Key
+          required: true
+          schema:
+            type: string
+          example: 02d9fbeeb08f28182c10733f79180bcace5ef68b2841c83252e3574be1d97492e2
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseLogin'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBadRequest'
+        '403':
+          description: Forbidden(Does not have NFT/SBT)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseForbidden'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseNotFound'
+        '500':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseInternalServerError'
+  /v1/logout:
+    post:
+      tags:
+        - Login
+      summary: Process the logout to the system
+      operationId: logout
+      parameters:
+        - name: jwt
+          in: header
+          description: IdToken
+          required: true
+          schema:
+            type: string
+          example: jwt eyxxx
+        - name: public_key
+          in: header
+          description: Public Key
+          required: true
+          schema:
+            type: string
+          example: 02d9fbeeb08f28182c10733f79180bcace5ef68b2841c83252e3574be1d97492e2
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseLogin'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseUnauthorized'
+        '500':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseInternalServerError'
+components:
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
+      description: Credentials or access token for API
+  schemas:
+    CommonResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Success
+        id_info:
+          type: object
+          $ref: '#/components/schemas/KeyValue'
+    KeyValue:
+      type: object
+      properties:
+        key:
+          type: string
+          example: comment_id
+        value:
+          type: string
+          example: 2490ebf5-e378-4074-97d0-3ce5004ae9cg
+    NFT:
+      type: object
+      properties:
+        token_address:
+          type: string
+          example: '0x2d0d9b4075e231bff33141d69df49ffcf3be7642'
+        token_id:
+          type: number
+          example: 23
+        amount:
+          type: string
+          example: '1'
+        owner_of:
+          type: string
+          example: '0x2c57333a7f9480fdedbfa120eee9e1912b11bbd0'
+        contract_type:
+          type: string
+          example: ERC721
+        name:
+          type: string
+          example: ABC Token
+        symbol:
+          type: string
+          example: ABC
+        token_uri:
+          type: string
+          example: >-
+            https://ipfs.moralis.io:2053/ipfs/QmYWcert25M8SFFJbbDkyXHGiPpCQEXKoeqeUsnxCkvCEA
+        image_url:
+          type: string
+          example: >-
+            https://ipfs.io/ipfs/QmR3VJzM45WHbVxz5k9YjTmd7sFvvHrZ8earsiDCXxNdPC?filename=nft1.png
+        metadata:
+          type: string
+          example: '{}'
+    NFTListResponse:
+      type: object
+      properties:
+        total:
+          type: number
+          example: 16
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/NFT'
+    ResponseBadRequest:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Bad Request
+    ResponseConflict:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Conflict
+    ResponseForbidden:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Forbidden
+    ResponseInternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Service Unavailable
+    ResponseLogin:
+      type: object
+      properties:
+        message:
+          type: string
+        transfer_fails:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransferFail'
+    ResponseNotFound:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Not Found
+    ResponseUnauthorized:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Unauthorized
+    SuccessResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Success
+    TransferFail:
+      type: object
+      properties:
+        message:
+          type: string
+        token_name:
+          type: string
+        token_id:
+          type: string
+    User:
+      type: object
+      properties:
+        user_id:
+          type: string
+          example: 9490ebf5-e378-4074-97d0-3ce5004ae918
+        wallets:
+          type: object
+          $ref: '#/components/schemas/Wallet'
+        nickname:
+          type: string
+          example: Kelvin Mak
+        user_role_ids:
+          type: array
+          items:
+            type: string
+          example:
+            - admin
+            - user
+        type_of_login:
+          type: string
+          example: email
+        is_sent_token:
+          type: boolean
+          example: false
+        created_at:
+          type: number
+          example: 1655562492284
+        created_by:
+          type: string
+          example: 2490ebf5-e378-4074-97d0-3ce5004ae9cf
+        updated_at:
+          type: number
+          example: 1655562492284
+        updated_by:
+          type: string
+          example: 2490ebf5-e378-4074-97d0-3ce5004ae9cf
+        delete_flg:
+          type: boolean
+          example: false
+    Wallet:
+      type: object
+      properties:
+        wallet_address:
+          type: string
+          example: '0x67dF41d7Df0b07EcC985D87E093D48bbbab68E74'
+        wallet_public_key:
+          type: string
+          example: 035143318b83eb5d31611f8c03582ab1200494f66f5e11a67c34f5581f48c1b70b
+    WalletUser:
+      type: object
+      properties:
+        user_id:
+          type: string
+          example: 9490ebf5-e378-4074-97d0-3ce5004ae918

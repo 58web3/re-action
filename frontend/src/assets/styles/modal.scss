@@ -1,0 +1,54 @@
+.swal2-popup {
+  background: $white;
+  border: 1px solid #ebebeb !important;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) !important;
+  border-radius: 40px !important;
+  font-family: "Noto Sans";
+  padding: 40px 23px 27px !important;
+  font-style: normal;
+
+  .swal2-error {
+    display: none !important;
+  }
+  .swal2-success {
+    margin: 0 auto !important;
+  }
+  .swal2-title {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 100%;
+    /* identical to box height, or 20px */
+
+    text-align: center;
+    letter-spacing: 0.01em;
+
+    color: $black;
+  }
+  .swal2-html-container {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 150%;
+    text-align: center;
+
+    color: $black;
+  }
+  .swal2-confirm {
+    margin-top: 19px;
+    min-width: 200px;
+    height: 50px;
+    padding: 17px 12px;
+    background: #ebebeb !important;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 100px !important;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 100%;
+    /* identical to box height, or 16px */
+    outline: none;
+    border: none;
+    text-align: center;
+    letter-spacing: 0.1em;
+
+    color: $black !important;
+  }
+}

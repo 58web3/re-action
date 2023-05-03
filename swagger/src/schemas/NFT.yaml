@@ -1,0 +1,33 @@
+NFT: 
+  type: object
+  properties:
+    token_address: 
+      type: string
+      example: "0x2d0d9b4075e231bff33141d69df49ffcf3be7642"
+    token_id: 
+      type: number
+      example: 23
+    amount: 
+      type: string
+      example: "1"
+    owner_of: 
+      type: string
+      example: "0x2c57333a7f9480fdedbfa120eee9e1912b11bbd0"
+    contract_type: 
+      type: string
+      example: "ERC721"
+    name: 
+      type: string
+      example: "ABC Token"
+    symbol: 
+      type: string
+      example: "ABC"
+    token_uri: 
+      type: string
+      example: "https://ipfs.moralis.io:2053/ipfs/QmYWcert25M8SFFJbbDkyXHGiPpCQEXKoeqeUsnxCkvCEA"
+    image_url:
+      type: string
+      example: "https://ipfs.io/ipfs/QmR3VJzM45WHbVxz5k9YjTmd7sFvvHrZ8earsiDCXxNdPC?filename=nft1.png"
+    metadata: 
+      type: string
+      example: "{}"

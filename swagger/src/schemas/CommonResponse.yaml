@@ -1,0 +1,9 @@
+CommonResponse:
+  type: object
+  properties:
+    message:
+      type: string
+      example: "Success"
+    id_info:
+      type: object
+      $ref: '#/components/schemas/KeyValue'

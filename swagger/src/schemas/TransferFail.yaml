@@ -1,0 +1,9 @@
+TransferFail:
+  type: object
+  properties:
+    message:
+      type: string
+    token_name:
+      type: string
+    token_id:
+      type: string

@@ -1,0 +1,9 @@
+KeyValue:
+  type: object
+  properties:
+    key:
+      type: string
+      example: "comment_id"
+    value:
+      type: string
+      example: "2490ebf5-e378-4074-97d0-3ce5004ae9cg"

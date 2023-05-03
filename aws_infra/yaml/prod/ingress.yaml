@@ -1,0 +1,54 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: renft-app
+  name: ingress
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-group-attributes: stickiness.enabled=false,stickiness.lb_cookie.duration_seconds=120
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-FS-1-2-Res-2020-10
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-northeast-1:629667697317:certificate/8dcf3bb4-c743-48fe-a75c-b380c20ea978
+    alb.ingress.kubernetes.io/wafv2-acl-arn: arn:aws:wafv2:ap-northeast-1:629667697317:regional/webacl/dao-waf/2b7fc46e-15b2-4491-8723-ebb10ac46cd8
+    alb.ingress.kubernetes.io/load-balancer-attributes: idle_timeout.timeout_seconds=600,routing.http2.enabled=true,access_logs.s3.enabled=true,access_logs.s3.bucket=renft-access-log,access_logs.s3.prefix=renft-alb
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
+    alb.ingress.kubernetes.io/group.name: renft-app
+    alb.ingress.kubernetes.io/success-codes: 200,401,404
+    alb.ingress.kubernetes.io/actions.ssl-redirect: >-
+      {
+          "Type": "redirect",
+          "RedirectConfig": {
+              "Protocol": "HTTPS",
+              "Port": "443",
+              "Host": "#{host}",
+              "Path": "/#{path}",
+              "Query": "#{query}",
+              "StatusCode": "HTTP_301"
+          }
+      }
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ssl-redirect
+                port:
+                  name: use-annotation
+          - path: /v1/
+            pathType: Prefix
+            backend:
+              service:
+                name: api-service
+                port:
+                  number: 8888
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend-service
+                port:
+                  number: 8080

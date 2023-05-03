@@ -1,0 +1,53 @@
+{
+  "name": "social-good-web3",
+  "version": "0.0.1",
+  "author": "Ken Yurino <ken.yurino@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "start:dev": "hardhat node",
+    "migrate:local-nft": "NODE_ENV=development hardhat run --network localhost scripts/migrate-deploy-nft.js",
+    "migrate:local-re-mint": "NODE_ENV=development hardhat run --network localhost scripts/migrate-re-mint-nft.js",
+    "migrate:shibuya-nft": "NODE_ENV=development hardhat run --network shibuya scripts/migrate-deploy-nft.js",
+    "migrate:shibuya-remint-nft": "NODE_ENV=development hardhat run --network shibuya scripts/migrate-re-mint-nft.js",
+    "dev-kms-wallet-address": "NODE_ENV=development hardhat run --network shibuya_kms scripts/output-kms-wallet-address.js",
+    "dev-kms-shibuya-nft": "NODE_ENV=development hardhat run --network shibuya_kms scripts/migrate-deploy-nft.js",
+    "dev-kms-shibuya-remint-nft": "NODE_ENV=development hardhat run --network shibuya_kms scripts/migrate-re-mint-nft.js",
+    "stg-kms-wallet-address": "NODE_ENV=staging hardhat run --network shibuya_kms scripts/output-kms-wallet-address.js",
+    "stg-kms-shibuya-nft": "NODE_ENV=staging hardhat run --network shibuya_kms scripts/migrate-deploy-nft.js",
+    "stg-kms-shibuya-remint-nft": "NODE_ENV=staging hardhat run --network shibuya_kms scripts/migrate-re-mint-nft.js",
+    "prod-kms-wallet-address": "NODE_ENV=production hardhat run --network shibuya_kms scripts/output-kms-wallet-address.js",
+    "prod-kms-shibuya-nft": "NODE_ENV=production hardhat run --network shibuya_kms scripts/migrate-deploy-nft.js",
+    "prod-kms-shibuya-remint-nft": "NODE_ENV=production hardhat run --network shibuya_kms scripts/migrate-re-mint-nft.js",
+    "migrate:local-sbt": "NODE_ENV=development hardhat run --network localhost scripts/migrate-deploy-sbt.js",
+    "migrate:local-upgrade-sbt": "NODE_ENV=development hardhat run --network localhost scripts/migrate-upgrade-sbt.js",
+    "migrate:shibuya-sbt": "NODE_ENV=development hardhat run --network shibuya scripts/migrate-deploy-sbt.js",
+    "migrate:shibuya-upgrade-sbt": "NODE_ENV=development hardhat run --network shibuya scripts/migrate-upgrade-sbt.js",
+    "dev-kms-shibuya-sbt": "NODE_ENV=development hardhat run --network shibuya_kms scripts/migrate-deploy-sbt.js",
+    "dev-kms-shibuya-upgrade-sbt": "NODE_ENV=development hardhat run --network shibuya_kms scripts/migrate-upgrade-sbt.js",
+    "stg-kms-shibuya-sbt": "NODE_ENV=staging hardhat run --network shibuya_kms scripts/migrate-deploy-sbt.js",
+    "stg-kms-shibuya-upgrade-sbt": "NODE_ENV=staging hardhat run --network shibuya_kms scripts/migrate-upgrade-sbt.js",
+    "prod-kms-shibuya-sbt": "NODE_ENV=production hardhat run --network shibuya_kms scripts/migrate-deploy-sbt.js",
+    "prod-kms-shibuya-upgrade-sbt": "NODE_ENV=production hardhat run --network shibuya_kms scripts/migrate-upgrade-sbt.js"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.7.0",
+    "@openzeppelin/contracts-upgradeable": "^4.5.2",
+    "@openzeppelin/hardhat-upgrades": "^1.15.0",
+    "@openzeppelin/test-helpers": "^0.5.15",
+    "@rumblefishdev/hardhat-kms-signer": "^1.1.2",
+    "aws-sdk": "^2.1261.0",
+    "chai": "^4.3.6",
+    "csvtojson": "^2.0.10",
+    "dotenv": "^16.0.3",
+    "ethereum-waffle": "^3.4.0",
+    "hardhat": "^2.12.6",
+    "web3": "^1.8.2"
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.2.0",
+    "@nomiclabs/hardhat-web3": "^2.0.0",
+    "ethers": "^5.0.0"
+  }
+}

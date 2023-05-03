@@ -1,0 +1,15 @@
+.swal2-title,
+.swal2-html-container {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+}
+.swal2-container {
+  z-index: 100000 !important;
+}
+
+.swal2-styled.swal2-confirm {
+  background-color: $black !important;
+}
+
+.swal2-styled.swal2-cancel {
+  background-color: $bg-alert !important;
+}

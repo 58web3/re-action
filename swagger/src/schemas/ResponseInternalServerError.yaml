@@ -1,0 +1,6 @@
+ResponseInternalServerError:
+  type: object
+  properties:
+    message:
+      type: string
+      example: Service Unavailable
