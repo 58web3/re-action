@@ -26,7 +26,7 @@ copy (.env.development|.env.staging|.env.production) .env
 | USE_DYNAMODB_LOCAL                         | Whether DynamoDB Local is used or not            | true                                                            |
 | DYNAMODB_LOCAL_URL                         | URL of DynamoDB Local                            | http://localhost:8000                                           |
 | DYNAMODB_REGION                            | Region of DynamoDB                               | ap-northeast-1                                                  |
-| DYNAMODB_TABLE_PREFIX                      | Prefix assigned to the table created in DYNAMODB | dev_renft_                                                      |
+| DYNAMODB_TABLE_PREFIX                      | Prefix assigned to the table created in DYNAMODB | dev_reaction_                                                      |
 | SHIBUYA_RPC                                | URL of SHIBUYA_RPC                               | https://shibuya.public.blastapi.io                              |
 | SUBSCAN_END_POINT                          | URL of Subscan erc721 collectibles API           | https://shibuya.api.subscan.io/api/scan/evm/erc721/collectibles |
 | SUBSCAN_END_POINT_TOKEN_TRANSFER           | URL of Subscan erc721 transfers API              | https://shibuya.api.subscan.io/api/scan/evm/token/transfer      |
