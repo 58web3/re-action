@@ -1,9 +1,8 @@
 <template>
-  <div class="overlay-container">
-    <div class="spinner-container-wrapper">
-      <span class="loader"></span>
-      <p>{{ message }}</p>
-    </div>
+  <div class="spinner-container-wrapper">
+    <p>Issue...</p>
+    <p>{{ message }}</p>
+    <span class="loader"></span>
   </div>
 </template>
 
@@ -18,8 +17,6 @@
   color: #545454;
   font-family: inherit;
   background: $white;
-  border: 1px solid #ebebeb;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 40px;
   padding: 67px 28px;
 }
@@ -84,7 +81,7 @@ p {
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "OverlaySpinner",
+  name: "OverlayLoading",
   props: {
     message: {
       type: String,

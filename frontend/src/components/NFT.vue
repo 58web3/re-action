@@ -15,25 +15,45 @@
     <div class="heading">{{ reduceWallet(token.token_address) }}</div>
     <div class="heading mt-1">Token ID:</div>
     <div class="heading">{{ token.token_id }}</div>
+    <VButton :text="$t('issue_did')" @click="handleIssueDid" />
   </div>
+  <component
+    :is="modal"
+    v-if="showModal"
+    :isLoading="isLoading"
+    @close="close"
+    @next="nextStep($event)"
+  ></component>
 </template>
 
 <script>
+import VButton from "@/components/Button.vue";
 import Loading from "@/components/Loading.vue";
+import ModalIssueDid from "@/components/IssueDid/ModalIssueDid.vue";
 
 export default {
   name: "NFT",
   props: {
     token: Object,
   },
-  components: { Loading },
+  components: { Loading, VButton, ModalIssueDid },
   data() {
     return {
       image: null,
       loaded: false,
+      showModal: false,
+      modal: "",
+      isLoading: false,
     };
   },
   methods: {
+    nextStep(event) {
+      this.showModal = true;
+      this.modal = "ModalIssueDid";
+    },
+    close() {
+      this.showModal = false;
+    },
     reduceWallet(wallet) {
       return wallet.substr(-42, 10) + "..." + wallet.substr(-4, 4);
     },

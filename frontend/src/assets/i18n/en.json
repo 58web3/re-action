@@ -154,5 +154,10 @@
     "about_nft": "About NFT",
     "faq_nft": "FAQs about receiving NFTs",
     "faq_connect_astar": "How to connect to Astar Network",
-    "faq_nft_community": "Invitation to NFT holders' community"
+    "faq_nft_community": "Invitation to NFT holders' community",
+    "issue_did": "Issue DID",
+    "correct_did":"Correct. Issue DID",
+    "back":"Back",
+    "prevent_close_window":"Do not close the window",
+    "did_issue":"Your DID  is issue successfully"
 }
