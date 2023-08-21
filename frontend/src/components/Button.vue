@@ -1,5 +1,5 @@
 <template>
-  <button type="submit" >
+  <button :class="!type ? 'primary-button' : 'secondary-button'" type="submit">
     <span>
       {{ text }}
     </span>
@@ -14,15 +14,20 @@ export default {
       type: String,
       default: "",
     },
+    type: {
+      type: Boolean,
+      default: false,
+    },
   },
 };
 </script>
 
 <style scoped lang="scss">
 button {
+  width: 100%;
   outline: none;
   border: none;
-  background: $black;
+
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 100px;
   min-width: 200px;
@@ -38,7 +43,13 @@ button {
     text-align: center;
     letter-spacing: 0.1em;
 
-    color: $white;
+    color: #fff;
   }
+}
+.primary-button {
+  background: $black;
+}
+.secondary-button {
+  background: rgb(194, 193, 193);
 }
 </style>
