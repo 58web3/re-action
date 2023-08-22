@@ -117,6 +117,8 @@ export default {
           position: "center",
           icon: "success",
         });
+        this.step = 1;
+        (this.firstName = ""), (this.lastName = ""), (this.email = "");
       }, 5000);
     },
   },
