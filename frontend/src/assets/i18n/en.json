@@ -159,5 +159,7 @@
     "correct_did":"Correct. Issue DID",
     "back":"Back",
     "prevent_close_window":"Do not close the window",
-    "did_issue":"Your DID  is issue successfully"
+    "did_issue":"Your DID  is issue successfully",
+    "vc_issue_success":"Your VC  is Issue successfully",
+    "issue_vc":"Issue VC"
 }

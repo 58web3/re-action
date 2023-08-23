@@ -33,7 +33,14 @@
             :class="{ active: idx === currentSlider }"
           >
             <div class="d-flex flex-wrap justify-content-center nft-container">
-              <NFT v-for="item in items" :token="item" :key="item.token"> </NFT>
+              <NFT
+                @openIssueDid="nextStep()"
+                @openVC="handleShowModalVc()"
+                v-for="item in items"
+                :token="item"
+                :key="item.token"
+              >
+              </NFT>
             </div>
           </div>
           <Loading class="p-5" v-if="NFTS.length === 0"></Loading>
@@ -65,9 +72,11 @@
         <div class="description">
           {{ $t("section_above") }}
           <div class="link">
-            <a href="https://revisionartproject.com/articles/642f9b8fd511e51b13679591" target="_blank">{{
-              $t("faq_nft_community")
-            }}</a>
+            <a
+              href="https://revisionartproject.com/articles/642f9b8fd511e51b13679591"
+              target="_blank"
+              >{{ $t("faq_nft_community") }}</a
+            >
           </div>
         </div>
         <div class="foot-img">{{ $t("join_to_com") }}</div>
@@ -98,6 +107,8 @@
     v-show="showSpinner"
     :message="spinnerMessage"
   ></OverlaySpinner>
+  <ModalIssueDid v-show="showModal" @close="close" />
+  <ModalIssueVC v-show="showModalVC" @close="close" />
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
@@ -108,12 +119,21 @@ import { mapActions, mapGetters } from "vuex";
 import Web3AuthService from "../services/web3authServices";
 import VButton from "@/components/Button.vue";
 import Loading from "@/components/Loading.vue";
+import ModalIssueDid from "@/components/IssueDid/ModalIssueDid.vue";
+import ModalIssueVC from "@/components/IssueVc/ModalIssueVC.vue";
 import axiosService from "@/services/axiosServices";
-import {API_ENDPOINT} from "@/constants/api";
+import { API_ENDPOINT } from "@/constants/api";
 
 export default defineComponent({
   name: "MyPageView",
-  components: { NFT, OverlaySpinner, VButton, Loading },
+  components: {
+    NFT,
+    OverlaySpinner,
+    VButton,
+    Loading,
+    ModalIssueDid,
+    ModalIssueVC,
+  },
   data() {
     return {
       showSpinner: true,
@@ -123,6 +143,9 @@ export default defineComponent({
       NFTS: [],
       userWallet: "",
       currentSlider: 0,
+      showModal: false,
+      showModalVC: false,
+      isLoading: false,
     };
   },
   async mounted() {
@@ -181,6 +204,16 @@ export default defineComponent({
         this.currentSlider = this.NFTS.length - 1;
       }
     },
+    nextStep() {
+      this.showModal = true;
+    },
+    handleShowModalVc() {
+      this.showModalVC = true;
+    },
+    close() {
+      this.showModal = false;
+      this.showModalVC = false;
+    },
     next() {
       if (this.currentSlider === this.NFTS.length) {
         this.currentSlider++;
@@ -192,9 +225,7 @@ export default defineComponent({
       (this as any).spinnerMessage = "logging out...";
       (this as any).showSpinner = true;
       try {
-        await axiosService
-        .post(`${API_ENDPOINT}/v1/logout`, {})
-        .catch((e) => {
+        await axiosService.post(`${API_ENDPOINT}/v1/logout`, {}).catch((e) => {
           this.handelUnexpectedError();
         });
         await (this as any).$w3a.logout();

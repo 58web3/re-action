@@ -16,27 +16,20 @@
     <div class="heading mt-1">Token ID:</div>
     <div class="heading">{{ token.token_id }}</div>
     <VButton :text="$t('issue_did')" @click="handleIssueDid" />
+    <VButton :text="$t('issue_vc')" @click="handleIssueVC" class="mt-2" type />
   </div>
-  <component
-    :is="modal"
-    v-if="showModal"
-    :isLoading="isLoading"
-    @close="close"
-    @next="nextStep($event)"
-  ></component>
 </template>
 
 <script>
 import VButton from "@/components/Button.vue";
 import Loading from "@/components/Loading.vue";
-import ModalIssueDid from "@/components/IssueDid/ModalIssueDid.vue";
 
 export default {
   name: "NFT",
   props: {
     token: Object,
   },
-  components: { Loading, VButton, ModalIssueDid },
+  components: { Loading, VButton },
   data() {
     return {
       image: null,
@@ -47,9 +40,11 @@ export default {
     };
   },
   methods: {
-    nextStep(event) {
-      this.showModal = true;
-      this.modal = "ModalIssueDid";
+    handleIssueDid() {
+      this.$emit("openIssueDid");
+    },
+    handleIssueVC() {
+      this.$emit("openVC");
     },
     close() {
       this.showModal = false;

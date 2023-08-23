@@ -53,9 +53,13 @@ export default {
     padding-top: 10vh;
     @media all and (max-width: 750px) {
       padding-top: 5vh;
+      padding-left: 1rem;
+      padding-right: 1rem;
     }
     @media all and (max-height: 675px) {
       padding-top: 0vh;
+      padding-left: 1rem;
+      padding-right: 1rem;
     }
   }
 }
