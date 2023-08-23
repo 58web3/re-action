@@ -1,7 +1,7 @@
 # RE:NFT API
 ## Prerequisites
 - Git 2.xx.xx
-- Node.js (latest LTS version) 16.xx.xx
+- Node.js (latest LTS version) 18.xx.xx
 - Yarn 1.22.xx
 - [DynamoDB Local](https://docs.aws.amazon.com/ja_jp/amazondynamodb/latest/developerguide/DynamoDBLocal.html) (for localhost develop)
 
