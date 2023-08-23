@@ -9,6 +9,7 @@ async function loadData(schemaPath, modelName, recordsPath) {
 
   for (const record of records) {
     const newRecord = new model(record);
+    newRecord.token_id = new Date().getTime() + newRecord.token_id;
     await newRecord.save();
   }
   console.log(`Loaded ${records.length} records to ${modelName} table`);

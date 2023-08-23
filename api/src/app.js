@@ -4,7 +4,7 @@ const app = express();
 const cors = require('cors');
 const session = require('express-session');
 global.logger = require("./util/logger");
-global.dynamoose = require('./init_dynamoose');
+global.dynamoose = require('./init_dynamoose').dynamoose;
 
 const router = require('./router');
 

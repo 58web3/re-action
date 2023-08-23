@@ -4,7 +4,7 @@
   "main": "app.js",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon src/server.js",
+    "start": "dotenv -e .env.development nodemon src/server.js",
     "lint": "eslint --fix --ext .js .",
     "test": "cross-env RUN_MODE=test jest --coverage",
     "load_data": "dotenv -e .env.development node load_data/init_db.js"
