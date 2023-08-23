@@ -1,4 +1,4 @@
-global.dynamoose = require('../../src/init_dynamoose');
+global.dynamoose = require('../../src/init_dynamoose').dynamoose;
 
 const testDaoId = "dao12345";
 const testUserId = 'user12345';

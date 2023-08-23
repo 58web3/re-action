@@ -1,4 +1,4 @@
-global.dynamoose = require('../../src/init_dynamoose');
+global.dynamoose = require('../../src/init_dynamoose').dynamoose;
 const UserNFTModel = require("../../src/models/user_nft");
 const TokenModel = require("../../src/models/token");
 const Web3Util = require("../../src/util/web3");
