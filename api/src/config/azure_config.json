@@ -3,12 +3,12 @@
         "Endpoint": "https://verifiedid.did.msidentity.com/v1.0",
         "VCServiceScope": "3db474b9-6a0c-4840-96ac-1fceb342124f/.default",
         "Instance": "https://login.microsoftonline.com/{0}",
-        "TenantId": "766072a8-e18b-4139-b3f4-4bbc875ff40b",
-        "ClientId": "cceaacf1-717c-4dfc-823d-c1391e2bf460",
-        "ClientSecret": "_wz8Q~U4X7o_61c4D7jYLHEAhLkr6xKXBD~wjc1Z",
-        "CertificateName": "reearth",
-        "IssuerAuthority": "did:web:6de8-115-162-82-158.ngrok-free.app",
-        "VerifierAuthority": "did:web:6de8-115-162-82-158.ngrok-free.app",
-        "CredentialManifest": "https://verifiedid.did.msidentity.com/v1.0/tenants/766072a8-e18b-4139-b3f4-4bbc875ff40b/verifiableCredentials/contracts/b2f3d457-1079-0487-d716-10787e5de5be/manifest"
+        "TenantId": "<YOUR-AAD-TENANDID>",
+        "ClientId": "<YOUR-AAD-CLIENTID-FOR-API-ACCESS>",
+        "ClientSecret": "<YOUR-AAD-CLIENTSECRET-FOR-API-ACCESS>",
+        "CertificateName": "<YOUR-AAD-CERTNAME>",
+        "IssuerAuthority": "<YOUR-did:ion>",
+        "VerifierAuthority": "<VCs-did:ion>",
+        "CredentialManifest": "https://verifiedid.did.msidentity.com/v1.0/<YOUR-AAD-TENANDID>/verifiableCredentials/contracts/VerifiedCredentialExpert"
     }
 }
