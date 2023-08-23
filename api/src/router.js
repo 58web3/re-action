@@ -5,6 +5,7 @@ const wallet = require("./controllers/wallet");
 const csrf = require("./controllers/csrf");
 const donor = require("./controllers/donor");
 const login = require("./controllers/login");
+const issuer = require("./controllers/issuer");
 
 const { validator } = require("./middlewares/validator");
 const { verifyCSRFToken } = require("./middlewares/verify_csrf_token");
@@ -78,6 +79,12 @@ router.post(
     verifyIdToken,
     verifyCSRFToken,
     loginState.setLoggedOut
+);
+
+// Request Issuing VC
+router.get(
+  "/verifier/issuance-request",
+  issuer.issuanceRequest
 );
 
 module.exports = router;

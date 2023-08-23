@@ -1,0 +1,14 @@
+{
+    "AppSettings": {
+        "Endpoint": "https://verifiedid.did.msidentity.com/v1.0",
+        "VCServiceScope": "3db474b9-6a0c-4840-96ac-1fceb342124f/.default",
+        "Instance": "https://login.microsoftonline.com/{0}",
+        "TenantId": "<YOUR-AAD-TENANDID>",
+        "ClientId": "<YOUR-AAD-CLIENTID-FOR-API-ACCESS>",
+        "ClientSecret": "<YOUR-AAD-CLIENTSECRET-FOR-API-ACCESS>",
+        "CertificateName": "<YOUR-AAD-CERTNAME>",
+        "IssuerAuthority": "<YOUR-did:ion>",
+        "VerifierAuthority": "<VCs-did:ion>",
+        "CredentialManifest": "https://verifiedid.did.msidentity.com/v1.0/<YOUR-AAD-TENANDID>/verifiableCredentials/contracts/VerifiedCredentialExpert"
+    }
+}
