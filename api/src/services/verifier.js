@@ -1,8 +1,9 @@
 const { msalCca, msalClientCredentialRequest } = require('../init_verifiable_credential');
 const presentationConfig = require('../config/presentation_request_config.json');
 const azureConfig = require('../config/azure_config.json');
+const base64url = require('base64url');
 
-presentationConfig.registration.clientName = "Node.js Verified ID sample";
+presentationConfig.registration.clientName = azureConfig.AppSettings["ClientName"];
 
 
 const presentationRequest = async function (req, res) {

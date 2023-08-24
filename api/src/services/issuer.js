@@ -1,9 +1,9 @@
 const { msalCca, msalClientCredentialRequest } = require('../init_verifiable_credential');
 const issuanceConfig = require('../config/issuance_request_config.json');
 const azureConfig = require('../config/azure_config.json');
-const base64url = require('base64url');
 
-issuanceConfig.registration.clientName = "Node.js Verified ID sample";
+
+issuanceConfig.registration.clientName = azureConfig.AppSettings["ClientName"];
 issuanceConfig.authority = azureConfig.AppSettings["IssuerAuthority"];
 issuanceConfig.manifest = azureConfig.AppSettings["CredentialManifest"];
 
