@@ -19,12 +19,7 @@
     <div class="heading">{{ token.token_id }}</div>
     <VButton :text="$t('issue_did')" @click="handleIssueDid" />
     <VButton :text="$t('issue_vc')" @click="handleIssueVC" class="mt-2" type />
-    <VButton
-      :text="$t('post')"
-      @click="$emit('bottomSheet')"
-      class="mt-2"
-      type
-    />
+    <VButton :text="$t('post')" @click="$emit('bottomSheet')" class="mt-2" />
   </div>
 </template>
 
