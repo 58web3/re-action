@@ -16,7 +16,6 @@ const { Action, Resource } = require("./util/constant");
 const validates = require("./validates/validates");
 const loginState = require("./middlewares/login_state_manager");
 
-const {Client} = require('@notionhq/client')
 // User
 router.get(
   "/user/:user_id",
@@ -79,6 +78,14 @@ router.post(
     verifyIdToken,
     verifyCSRFToken,
     loginState.setLoggedOut
+);
+
+// Notion
+router.post(
+    "/upload-media",
+    verifyIdToken,
+    verifyCSRFToken,
+    notion.createPage
 );
 
 module.exports = router;
