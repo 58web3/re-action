@@ -9,6 +9,7 @@
         "CertificateName": "<YOUR-AAD-CERTNAME>",
         "IssuerAuthority": "<YOUR-did:ion>",
         "VerifierAuthority": "<VCs-did:ion>",
-        "CredentialManifest": "https://verifiedid.did.msidentity.com/v1.0/<YOUR-AAD-TENANDID>/verifiableCredentials/contracts/VerifiedCredentialExpert"
+        "CredentialManifest": "https://verifiedid.did.msidentity.com/v1.0/<YOUR-AAD-TENANDID>/verifiableCredentials/contracts/VerifiedCredentialExpert",
+        "ClientName": "<YOUR-CLIENT-NAME>"
     }
 }
