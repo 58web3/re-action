@@ -154,5 +154,12 @@
     "about_nft": "NFTについて",
     "faq_nft": "NFTの受け取りについてよくある質問",
     "faq_connect_astar": "アスターネットワークへの接続方法はこちら",
-    "faq_nft_community": "NFTホルダーコミュニティへのご案内"
+    "faq_nft_community": "NFTホルダーコミュニティへのご案内",
+    "correct_did":"Ok",
+    "back":"Back",
+    "prevent_close_window":"Do not close the window",
+    "did_issue":"Your DID  is issue successfully",
+    "vc_issue_success":"Your VC  is Issue successfully",
+    "issue_vc":"Issue VC"
+
 }

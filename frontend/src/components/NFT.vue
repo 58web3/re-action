@@ -3,13 +3,15 @@
     <div class="card-image" v-if="!loaded">
       <Loading class="m-auto mt-5"></Loading>
     </div>
-    <img
-      :src="image"
-      class="card-image"
-      v-show="loaded"
-      @load="imgLoaded()"
-      @error="imgLoaded()"
-    />
+    <div class="wrap-image">
+      <img
+        :src="image"
+        class="card-image"
+        v-show="loaded"
+        @load="imgLoaded()"
+        @error="imgLoaded()"
+      />
+    </div>
     <div class="category">{{ token.name }}</div>
     <div class="heading">Token Address:</div>
     <div class="heading">{{ reduceWallet(token.token_address) }}</div>
@@ -65,7 +67,7 @@ export default {
 <style scoped lang="scss">
 .card {
   max-width: 165px;
-  height: 274px;
+  height: auto;
   background: none;
   border: none !important;
   margin: 25px;
@@ -73,7 +75,7 @@ export default {
     max-width: 140px;
   }
 }
-.card-image {
+.wrap-image {
   width: 180px;
   height: 180px;
   margin-bottom: 10px;
@@ -81,6 +83,9 @@ export default {
     width: 140px;
     height: 140px;
   }
+}
+.card-image {
+  width: 100%;
 }
 
 .card-image:hover {
