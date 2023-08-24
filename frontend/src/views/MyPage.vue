@@ -36,6 +36,7 @@
               <NFT
                 @openIssueDid="nextStep()"
                 @openVC="handleShowModalVc()"
+                @bottomSheet="handleOpenSelectFile()"
                 v-for="item in items"
                 :token="item"
                 :key="item.token"
@@ -109,6 +110,19 @@
   ></OverlaySpinner>
   <ModalIssueDid v-show="showModal" @close="close" />
   <ModalIssueVC v-show="showModalVC" @close="close" />
+  <ModalPostMedia
+    v-show="showModalMedia"
+    :name="nameFile"
+    :type="typeFile"
+    :size="sizeFile"
+    @close="close"
+    @chooseImage="handleChooseMedia"
+  />
+  <bottom-sheet :defaultState="sheetState" @setState="setState()">
+    <div style="padding-left: 10px; padding-right: 10px">
+      <ListOptionSelectFile @onFile="onFile" />
+    </div>
+  </bottom-sheet>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
@@ -119,8 +133,11 @@ import { mapActions, mapGetters } from "vuex";
 import Web3AuthService from "../services/web3authServices";
 import VButton from "@/components/Button.vue";
 import Loading from "@/components/Loading.vue";
+import BottomSheet from "@/components/BottomSheet.vue";
 import ModalIssueDid from "@/components/IssueDid/ModalIssueDid.vue";
 import ModalIssueVC from "@/components/IssueVc/ModalIssueVC.vue";
+import ModalPostMedia from "@/components/PostMedia/ModalPostMedia.vue";
+import ListOptionSelectFile from "@/components/ListOptionSelectFile.vue";
 import axiosService from "@/services/axiosServices";
 import { API_ENDPOINT } from "@/constants/api";
 
@@ -133,6 +150,9 @@ export default defineComponent({
     Loading,
     ModalIssueDid,
     ModalIssueVC,
+    BottomSheet,
+    ListOptionSelectFile,
+    ModalPostMedia,
   },
   data() {
     return {
@@ -145,7 +165,16 @@ export default defineComponent({
       currentSlider: 0,
       showModal: false,
       showModalVC: false,
+      showModalMedia: false,
       isLoading: false,
+      sheetState: "half",
+      isCameraOpen: false,
+      isPhotoTaken: false,
+      isShotPhoto: false,
+      imageinfo: null,
+      nameFile: "",
+      typeFile: "",
+      sizeFile: "",
     };
   },
   async mounted() {
@@ -204,6 +233,24 @@ export default defineComponent({
         this.currentSlider = this.NFTS.length - 1;
       }
     },
+    onFile(file: any) {
+      this.imageinfo = file[0];
+      this.nameFile = file[0].name;
+      this.typeFile = file[0].type;
+      this.sizeFile = file[0].size;
+      this.showModalMedia = true;
+      this.sheetState = "half";
+    },
+    handleChooseMedia() {
+      this.showModalMedia = false;
+      this.handleOpenSelectFile();
+    },
+    setState() {
+      this.sheetState = "half";
+    },
+    handleOpenSelectFile() {
+      this.sheetState = "open";
+    },
     nextStep() {
       this.showModal = true;
     },
@@ -213,6 +260,7 @@ export default defineComponent({
     close() {
       this.showModal = false;
       this.showModalVC = false;
+      this.showModalMedia = false;
     },
     next() {
       if (this.currentSlider === this.NFTS.length) {
