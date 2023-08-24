@@ -184,13 +184,17 @@ export default {
 }
 
 .card {
-  width: 100%;
+  width: 30%;
+  margin-left: 35%;
   height: 100vh;
   position: fixed;
-  background: white;
+  background: rgba(0, 0, 0, 0.3);
   border-radius: 10px 10px 0 0;
   box-shadow: 0 -3px 4px rgba(0, 0, 0, 0.1);
-  left: 0;
+  @media all and (max-width: 650px) {
+    width: 100%;
+    margin-left: 0;
+  }
 }
 
 .card[data-state="half"],

@@ -161,6 +161,9 @@
     "did_issue":"Your DID  is issue successfully",
     "vc_issue_success":"Your VC  is Issue successfully",
     "issue_vc":"Issue VC",
-    "issue_did": "Issue DID"
+    "issue_did": "Issue DID",
+    "post_image":"Post Image",
+    "post_media":"Post Media",
+    "post_media_success":"Your media is posted issue successfully"
 
 }
