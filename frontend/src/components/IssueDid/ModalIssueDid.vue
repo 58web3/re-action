@@ -41,7 +41,7 @@
             type
             v-if="step === 2"
             :text="$t('back')"
-            @click="signIn"
+            @click="handleBack"
             class="m-auto"
           ></VButton>
           <VButton
@@ -54,7 +54,7 @@
             v-if="step !== 3"
             type
             :text="$t('cancel')"
-            @click="signIn"
+            @click="handleCancel"
             class="m-auto"
           ></VButton>
         </div>
@@ -120,6 +120,14 @@ export default {
         this.step = 1;
         (this.firstName = ""), (this.lastName = ""), (this.email = "");
       }, 5000);
+    },
+    handleBack() {
+      this.step = 1;
+    },
+    handleCancel() {
+      this.$emit("close");
+      this.step = 1;
+      (this.firstName = ""), (this.lastName = ""), (this.email = "");
     },
   },
 };
