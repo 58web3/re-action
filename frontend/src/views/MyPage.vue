@@ -36,6 +36,7 @@
               <NFT
                 @openIssueDid="nextStep()"
                 @openVC="handleShowModalVc()"
+                @bottomSheet="handleOpenSelectFile()"
                 v-for="item in items"
                 :token="item"
                 :key="item.token"
@@ -109,6 +110,12 @@
   ></OverlaySpinner>
   <ModalIssueDid v-show="showModal" @close="close" />
   <ModalIssueVC v-show="showModalVC" @close="close" />
+  <bottom-sheet :defaultState="sheetState" @setState="setState()">
+    <div style="padding-left: 40px; padding-right: 40px">
+      <h1>Lil B's Status</h1>
+      <p style="margin-top: 20px">Lil B's health has severly degraded to.</p>
+    </div>
+  </bottom-sheet>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
@@ -119,6 +126,7 @@ import { mapActions, mapGetters } from "vuex";
 import Web3AuthService from "../services/web3authServices";
 import VButton from "@/components/Button.vue";
 import Loading from "@/components/Loading.vue";
+import BottomSheet from "@/components/BottomSheet.vue";
 import ModalIssueDid from "@/components/IssueDid/ModalIssueDid.vue";
 import ModalIssueVC from "@/components/IssueVc/ModalIssueVC.vue";
 import axiosService from "@/services/axiosServices";
@@ -133,6 +141,7 @@ export default defineComponent({
     Loading,
     ModalIssueDid,
     ModalIssueVC,
+    BottomSheet,
   },
   data() {
     return {
@@ -146,6 +155,7 @@ export default defineComponent({
       showModal: false,
       showModalVC: false,
       isLoading: false,
+      sheetState: "half",
     };
   },
   async mounted() {
@@ -203,6 +213,12 @@ export default defineComponent({
       } else {
         this.currentSlider = this.NFTS.length - 1;
       }
+    },
+    setState() {
+      this.sheetState = "half";
+    },
+    handleOpenSelectFile() {
+      this.sheetState = "open";
     },
     nextStep() {
       this.showModal = true;
