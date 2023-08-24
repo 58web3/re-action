@@ -101,6 +101,6 @@ router.get(
 
 router.post(
   "/verifier/presentation-request-callback",
-  issuer.presentationRequestCallback
+  verifier.presentationRequestCallback
 );
 module.exports = router;

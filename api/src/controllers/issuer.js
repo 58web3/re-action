@@ -24,20 +24,7 @@ const issuanceRequestCallback = async function (req, res) {
     });
 };
 
-const presentationRequestCallback = async function (req, res) {
-    const result = await IssuerService.presentationRequestCallback(req, res);
-    if (result?.statusCode >= 400) {
-        return result;
-    }
-
-    res.status(200).json({
-        message: "Success",
-        data: result
-    });
-};
-
 module.exports = {
     issuanceRequest,
-    issuanceRequestCallback,
-    presentationRequestCallback
+    issuanceRequestCallback
 };
