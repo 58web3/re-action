@@ -1,6 +1,10 @@
-async function createPage() {
+const {Client} = require('@notionhq/client')
+
+const notion = new Client({auth: process.env.NOTION_KEY})
+
+
+async function createPage(title,url,contributor,waddress) {
   
-  for (let content of info) {
     
     const repsonse = await notion.pages.create({
       "parent": {
@@ -13,21 +17,21 @@ async function createPage() {
         {
           "type": "text",
           "text": {
-            "content": content.title
+            "content": title
           }
         }]
         },
         "Date":{
            "date": {
-			      "start": content.utc
+			      "start": new Date().toISOString()
 			    }
         },
         "URL":{
-          "url": content.url
+          "url": url
         },
         "Pre-approval Status":{
           "status": {
-        "name": content.status
+        "name": 'pre-approved'
       }
         },
         "Contributor":{
@@ -35,7 +39,7 @@ async function createPage() {
         {
           "type": "text",
           "text": {
-            "content": content.did
+            "content": contributor
           }
         }]
         },
@@ -44,7 +48,7 @@ async function createPage() {
         {
           "type": "text",
           "text": {
-            "content": content.waddress
+            "content": waddress
           }
         }]
         }
@@ -57,15 +61,14 @@ async function createPage() {
           "video": {
             "type": "external",
             "external": {
-              "url": content.url
+              "url": url
             }
           }
       }]
     })
     
   }
-  
-}
 
-getInfo('title',
-'url','did','waddress')
+module.exports = {
+  createPage,
+};
