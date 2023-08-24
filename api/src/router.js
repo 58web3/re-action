@@ -6,6 +6,7 @@ const csrf = require("./controllers/csrf");
 const donor = require("./controllers/donor");
 const login = require("./controllers/login");
 const issuer = require("./controllers/issuer");
+const verifier = require("./controllers/verifier");
 
 const { validator } = require("./middlewares/validator");
 const { verifyCSRFToken } = require("./middlewares/verify_csrf_token");
@@ -83,8 +84,23 @@ router.post(
 
 // Request Issuing VC
 router.get(
-  "/verifier/issuance-request",
+  "/issuer/issuance-request",
   issuer.issuanceRequest
 );
 
+router.post(
+  "/issuer/issuance-request-callback",
+  issuer.issuanceRequestCallback
+);
+
+// Verifiable Presentation
+router.get(
+  "/verifier/presentation-request",
+  verifier.presentationRequest
+);
+
+router.post(
+  "/verifier/presentation-request-callback",
+  issuer.presentationRequestCallback
+);
 module.exports = router;

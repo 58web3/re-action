@@ -1,7 +1,7 @@
 {
-    "includeQRCode": false,
+    "includeQRCode": true,
     "callback": {
-        "url": "https://YOURPUBLICREACHABLEHOSTNAME/api/verifier/presentationCallback",
+        "url": "https://YOURPUBLICREACHABLEHOSTNAME/api/verifier/issuance-presentation-callback",
         "state": "STATEWILLBESETINCODE",
         "headers": {
             "api-key": "OPTIONAL API-KEY for VERIFIER CALLBACK API"
@@ -16,9 +16,7 @@
     "requestedCredentials": [
         {
             "type": "VerifiedCredentialExpert",
-            "acceptedIssuers": [
-                "did:ion: copied from your VC portal in this sample the code copies it from CONFIG.JSON"
-            ]
+            "acceptedIssuers": []
         }
     ],
     "configuration": {
