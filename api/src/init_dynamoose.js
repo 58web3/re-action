@@ -29,4 +29,6 @@ if (process.env.DYNAMODB_TABLE_PREFIX) {
   });
 }
 
-module.exports = dynamoose;
+module.exports = {
+  dynamoose,
+};
