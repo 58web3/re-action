@@ -12,6 +12,7 @@
     "@aws-sdk/client-s3": "^3.199.0",
     "@aws-sdk/client-secrets-manager": "^3.223.0",
     "@hapi/joi": "^17.1.1",
+    "@notionhq/client": "^2.2.11",
     "@rumblefishdev/eth-signer-kms": "^2.2.0",
     "accesscontrol": "^2.2.1",
     "aws-sdk": "^2.1243.0",
