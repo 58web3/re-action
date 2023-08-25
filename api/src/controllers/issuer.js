@@ -24,7 +24,29 @@ const issuanceRequestCallback = async function (req, res) {
     });
 };
 
+const issuanceResponse = async function (req, res) {
+    const result = await IssuerService.issuanceResponse(req, res);
+    if (result.statusCode >= 400) {
+        return result;
+    }
+
+    res.status(200).json({
+        message: "Success",
+        data: result
+    });
+};
+
+const getManifest = async function (req, res) {
+    const result = await IssuerService.getManifest(req, res);
+
+    res.status(200).json({
+        message: "Success",
+        data: result
+    });
+}
 module.exports = {
     issuanceRequest,
-    issuanceRequestCallback
+    issuanceResponse,
+    issuanceRequestCallback,
+    getManifest
 };

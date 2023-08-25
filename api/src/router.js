@@ -85,6 +85,7 @@ router.post(
 // Request Issuing VC
 router.get(
   "/issuer/issuance-request",
+  verifyIdToken,
   issuer.issuanceRequest
 );
 
@@ -93,9 +94,22 @@ router.post(
   issuer.issuanceRequestCallback
 );
 
+router.get(
+  "/issuer/issuance-response",
+  verifyIdToken,
+  issuer.issuanceResponse
+);
+
+router.get(
+  "/issuer/get-manifest",
+  verifyIdToken,
+  issuer.getManifest
+);
+
 // Verifiable Presentation
 router.get(
   "/verifier/presentation-request",
+  verifyIdToken,
   verifier.presentationRequest
 );
 
@@ -103,4 +117,20 @@ router.post(
   "/verifier/presentation-request-callback",
   verifier.presentationRequestCallback
 );
+
+router.get(
+  "/verifier/presentation-response",
+  verifier.presentationResponse
+);
+
+router.post(
+  "/verifier/presentation-response-b2c",
+  verifier.presentationResponseB2C
+);
+
+router.get(
+  "/verifier/get-presentation-details",
+  verifier.getPresentationDetails
+);
+
 module.exports = router;
