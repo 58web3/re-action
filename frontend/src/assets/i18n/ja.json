@@ -160,10 +160,13 @@
     "prevent_close_window":"Do not close the window",
     "did_issue":"Your DID  is issue successfully",
     "vc_issue_success":"Your VC  is Issue successfully",
+    "vc_issue_failed":"Your VC  is Issue failed",
     "issue_vc":"Issue VC",
     "issue_did": "Issue DID",
     "post_image":"Post Image",
     "post_media":"Post Media",
-    "post_media_success":"Your media is posted issue successfully"
+    "choose_other_image":"Choose other media",
+    "post_media_success":"Your media is posted issue successfully",
+    "post_media_failed": "VP failed"
 
 }

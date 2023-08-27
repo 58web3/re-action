@@ -3,6 +3,7 @@ const uuid = require('uuid');
 const issuanceConfig = require('../config/issuance_request_config.json');
 const azureConfig = require('../config/azure_config.json');
 const VCCallbackModel = require('../models/vc_callback');
+const axios = require('axios');
 
 issuanceConfig.registration.clientName = azureConfig.AppSettings["ClientName"];
 issuanceConfig.authority = azureConfig.AppSettings["IssuerAuthority"];
@@ -24,9 +25,9 @@ const issuanceRequest = async function (req, res) {
             message: 'Could not acquire credentials to access your Azure Key Vault'
         });
     }
-
+    issuanceConfig.includeQRCode = req.body.include_qr_code;
     issuanceConfig.authority = azureConfig.AppSettings["IssuerAuthority"]
-    issuanceConfig.callback.url = `https://${req.hostname}/v1/issuer/issuance-request-callback`;
+    //issuanceConfig.callback.url = `https://${req.hostname}/v1/issuer/issuance-request-callback`;
     // modify payload with new state, the state is used to be able to update the UI when callbacks are received from the VC Service
     const id = uuid.v4();
     await VCCallbackModel.upsertVCCallback(id, {}, 'issuer');
@@ -43,13 +44,20 @@ const issuanceRequest = async function (req, res) {
         }
     }
     // here you could change the payload manifest and change the firstname and lastname
-    if (issuanceConfig.claims) {
-        if (issuanceConfig.claims.given_name) {
-            issuanceConfig.claims.given_name = "Megan";
-        }
-        if (issuanceConfig.claims.family_name) {
-            issuanceConfig.claims.family_name = "Bowen";
-        }
+    if (!issuanceConfig.claims) {
+        issuanceConfig.claims = {};
+    }
+    if (issuanceConfig.claims.first_name) {
+        issuanceConfig.claims.first_name = req.body.first_name;
+    }
+    if (issuanceConfig.claims.last_name) {
+        issuanceConfig.claims.last_name = req.body.last_name
+    }
+    if (issuanceConfig.claims.email) {
+        issuanceConfig.claims.email = req.body.email
+    }
+    if (issuanceConfig.claims.wallet_address) {
+        issuanceConfig.claims.wallet_address = req.body.wallet_address
     }
 
     const msIdentityHostName = "https://verifiedid.did.msidentity.com/v1.0/";
@@ -119,6 +127,11 @@ const getManifest = async function (req, res) {
     return azureConfig.AppSettings["CredentialManifest"];
 }
 
+const runRequestUri = async function (req, res) {
+    const requestUri = req.body.request_uri;
+    const apiRes = await axios.get(requestUri);
+    return apiRes.data;
+}
 
 const generatePin = (digits) => {
     let add = 1, max = 12 - add;
@@ -132,5 +145,6 @@ module.exports = {
     issuanceRequest,
     issuanceResponse,
     issuanceRequestCallback,
-    getManifest
+    getManifest,
+    runRequestUri
 };

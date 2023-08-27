@@ -8,12 +8,12 @@
           <Checkbox
             label="Your Name (first and last name)"
             value="name"
-            v-model="MySelectedValues"
+            @change="changeName"
           />
           <Checkbox
             label="Wallet Address"
             value="wallet"
-            v-model="MySelectedValues"
+            @change="changeWallet"
           />
           <p class="note">
             You need to agree to publish the data described above
@@ -47,6 +47,8 @@ import ModalLoading from "@/components/IssueDid/ModalLoading";
 import ModalTemplate from "@/components/ModalTemplate";
 import ErrorMessage from "@/components/UIComponent/ErrorMessage";
 import { emailRegex } from "@/utils/validations";
+import axiosService from "@/services/axiosServices";
+import { API_ENDPOINT } from "@/constants/api";
 
 export default {
   name: "ModalIssueDid",
@@ -63,10 +65,25 @@ export default {
       emailRegex,
       step: 1,
       showSpinner: false,
-      MySelectedValues: [],
+      nameCheck: false,
+      walletCheck: false
     };
   },
   methods: {
+    changeName(value) {
+      if (value === false) {
+        this.nameCheck = false;
+      } else if (value === true) {
+        this.nameCheck = true;
+      } 
+    },
+    changeWallet(value) {
+      if (value === false) {
+        this.walletCheck = false;
+      } else if (value === true) {
+        this.walletCheck = true;
+      }
+    },
     onCancel() {
       this.$emit("close");
       this.step = 1;
@@ -74,18 +91,68 @@ export default {
     confirmInfo() {
       this.step = 2;
     },
-    requestDID() {
+    async requestDID() {
       this.step = 3;
-      setTimeout(() => {
+
+      // user info
+      const vcUserInfo = {
+        include_qr_code: false
+      }
+
+      if (this.nameCheck) {
+        vcUserInfo.first_name = `first name1234`;
+        vcUserInfo.last_name = `last name1234`;
+        vcUserInfo.email = `last name1234`;
+      }
+
+      if (this.walletCheck) {
+        vcUserInfo.wallet_address = this.$w3a.userData.address;
+      }
+
+      // call /issuer/issuance-request api
+      await axiosService.post(`${API_ENDPOINT}/v1/issuer/issuance-request`, vcUserInfo).then(async (res) => {
+        console.log(res.data);
+        const id = res.data.data.id;
+        const url = res.data.data.url;
+        console.log("id:", id, "url:" + url);
+        const requestUri = url.split("request_uri=")[1];
+        console.log("requestUri:" + requestUri);
+
+        // call api to run request URI
+        const apiRes = await axiosService.post(`${API_ENDPOINT}/v1/issuer/run-request-uri`, {
+          request_uri: requestUri
+        });
+        const requestUriData = apiRes.data;
+        console.log("requestUriData:", requestUriData);
+        localStorage.setItem("reearthVC", JSON.stringify(requestUriData.data));
+
+        // check issuance response by /issuer/issuance-response
+        const issuanceRes = await axiosService.get(`${API_ENDPOINT}/v1/issuer/issuance-response?id=${id}`);
+        const issuanceData = issuanceRes.data;
+
+        console.log("issuanceData:", issuanceData);
+        
         this.$emit("close");
+        this.step = 1;
         this.$swal({
           title: this.$t("issue_vc"),
           text: this.$t("vc_issue_success"),
           position: "center",
           icon: "success",
         });
+      }).catch((e) => {
+        console.log(e);
+
+        this.$emit("close");
+        this.$swal({
+          title: this.$t("issue_vc"),
+          text: this.$t("vc_issue_failed"),
+          position: "center",
+          icon: "error",
+        });
+
         this.step = 1;
-      }, 5000);
+      });
     },
   },
 };

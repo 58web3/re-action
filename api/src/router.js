@@ -83,10 +83,16 @@ router.post(
 );
 
 // Request Issuing VC
-router.get(
+router.post(
   "/issuer/issuance-request",
   verifyIdToken,
   issuer.issuanceRequest
+);
+
+router.post(
+  "/issuer/run-request-uri",
+  verifyIdToken,
+  issuer.runRequestUri
 );
 
 router.post(

@@ -162,9 +162,11 @@
     "did_issue":"Your DID  is issue successfully",
     "post_media_success":"Your media is posted issue successfully",
     "vc_issue_success":"Your VC  is Issue successfully",
+    "vc_issue_failed":"Your VC  is Issue failed",
     "post_image":"Post Image",
     "post_media":"Post Media",
     "choose_other_image":"Choose other media",
-    "issue_vc":"Issue VC"
+    "issue_vc":"Issue VC",
+    "post_media_failed": "VP failed"
 
 }

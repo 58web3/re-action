@@ -25,8 +25,9 @@ const presentationRequest = async function (req, res) {
     }
 
     const id = uuid.v4();
+    presentationConfig.includeQRCode = "false" == req.query.include_qr_code ? false : true;
     presentationConfig.authority = azureConfig.AppSettings["VerifierAuthority"]
-    presentationConfig.callback.url = `https://${req.hostname}/v1/verifier/presentation-request-callback`;
+    //presentationConfig.callback.url = `https://${req.hostname}/v1/verifier/presentation-request-callback`;
     presentationConfig.callback.state = id;
 
     await VCCallbackModel.upsertVCCallback(id, {}, 'verifier');

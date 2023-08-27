@@ -44,9 +44,19 @@ const getManifest = async function (req, res) {
         data: result
     });
 }
+
+const runRequestUri = async function (req, res) {
+    const result = await IssuerService.runRequestUri(req, res);
+    res.status(200).json({
+        message: "Success",
+        data: result
+    });
+}
+
 module.exports = {
     issuanceRequest,
     issuanceResponse,
     issuanceRequestCallback,
-    getManifest
+    getManifest,
+    runRequestUri
 };
