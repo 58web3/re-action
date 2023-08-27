@@ -94,6 +94,12 @@ router.post(
   verifyIdToken,
   issuer.runRequestUri
 );
+router.post(
+  "/issuer/issue-card",
+  verifyIdToken,
+  issuer.issueCard
+);
+
 
 router.post(
   "/issuer/issuance-request-callback",

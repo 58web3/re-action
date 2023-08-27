@@ -53,10 +53,19 @@ const runRequestUri = async function (req, res) {
     });
 }
 
+const issueCard = async function (req, res) {
+    const result = await IssuerService.issueCard(req, res);
+    res.status(200).json({
+        message: "Success",
+        data: result
+    });
+}
+
 module.exports = {
     issuanceRequest,
     issuanceResponse,
     issuanceRequestCallback,
     getManifest,
-    runRequestUri
+    runRequestUri,
+    issueCard
 };

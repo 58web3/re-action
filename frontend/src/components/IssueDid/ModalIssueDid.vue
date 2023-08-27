@@ -109,6 +109,13 @@ export default {
     },
     requestDID() {
       this.step = 3;
+
+      // TODO
+      // create user DID
+      localStorage.setItem("first_name", this.firstName);
+      localStorage.setItem("last_name", this.lastName);
+      localStorage.setItem("email", this.email);
+
       setTimeout(() => {
         this.$emit("close");
         this.$swal({

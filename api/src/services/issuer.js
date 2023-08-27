@@ -4,6 +4,7 @@ const issuanceConfig = require('../config/issuance_request_config.json');
 const azureConfig = require('../config/azure_config.json');
 const VCCallbackModel = require('../models/vc_callback');
 const axios = require('axios');
+const jwtDecode = require("jwt-decode");
 
 issuanceConfig.registration.clientName = azureConfig.AppSettings["ClientName"];
 issuanceConfig.authority = azureConfig.AppSettings["IssuerAuthority"];
@@ -47,16 +48,16 @@ const issuanceRequest = async function (req, res) {
     if (!issuanceConfig.claims) {
         issuanceConfig.claims = {};
     }
-    if (issuanceConfig.claims.first_name) {
+    if (!issuanceConfig.claims.first_name) {
         issuanceConfig.claims.first_name = req.body.first_name;
     }
-    if (issuanceConfig.claims.last_name) {
+    if (!issuanceConfig.claims.last_name) {
         issuanceConfig.claims.last_name = req.body.last_name
     }
-    if (issuanceConfig.claims.email) {
+    if (!issuanceConfig.claims.email) {
         issuanceConfig.claims.email = req.body.email
     }
-    if (issuanceConfig.claims.wallet_address) {
+    if (!issuanceConfig.claims.wallet_address) {
         issuanceConfig.claims.wallet_address = req.body.wallet_address
     }
 
@@ -77,7 +78,11 @@ const issuanceRequest = async function (req, res) {
 
     const response = await fetch(client_api_request_endpoint, fetchOptions);
     const resp = await response.json()
-    resp.id = id;                              // add session id so browser can pull status
+    resp.id = id;                        // add session id so browser can pull status
+
+    if (issuanceConfig.pin) {
+        resp.pin = issuanceConfig.pin.value;   // add pin code so browser can display it
+    }
 
     return resp;
 }
@@ -129,8 +134,68 @@ const getManifest = async function (req, res) {
 
 const runRequestUri = async function (req, res) {
     const requestUri = req.body.request_uri;
-    const apiRes = await axios.get(requestUri);
-    return apiRes.data;
+    if (req.body.method == "post") {
+        const apiRes = await axios.post(requestUri, {
+            state: req.body.state
+        });
+        return apiRes.data;
+    } else {
+        const apiRes = await axios.get(requestUri);
+        return apiRes.data;
+    }
+}
+
+const issueCard = async function (req, res) {
+    const requestUri = req.body.request_uri;
+    let requestData = null;
+    if (req.body.method == "post") {
+        const apiRes = await axios.post(requestUri, {
+            state: req.body.state
+        });
+        requestData = apiRes.data;
+    } else {
+        const apiRes = await axios.get(requestUri);
+        requestData = apiRes.data;
+    }
+
+    console.log("requestUriData:", requestData);
+    //localStorage.setItem("reearthVC", JSON.stringify(requestData.data));
+
+    const decodeJwt = jwtDecode(requestData);
+    console.log(decodeJwt);
+
+
+    // (12) ユーザーが Authenticator 上で表示された VC カードの「追加」ボタンをタップします。
+    // https://beta.did.msidentity.com/v1.0/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/verifiableCredential/card/issue
+    //const issueUrl = "https://verifiedid.did.msidentity.com/v1.0/tenants/766072a8-e18b-4139-b3f4-4bbc875ff40b/verifiableCredential/card/issue";
+    //const apiRes2 = await axios.post(issueUrl, {
+    //});
+    //console.log(apiRes2.data)
+
+    // (13) Authenticator が Authorization Response を MS Verified ID サービスに送信します。
+    const completeRequestUri = decodeJwt.redirect_uri;
+    console.log("completeRequestUri:", completeRequestUri);
+
+    // What should to set as body
+    const requestBody = {
+        state: decodeJwt.state,
+        //state: req.body.state
+    }
+    console.log("requestBody:", requestBody);
+    await axios.post(completeRequestUri, requestBody).then((res) => {
+        console.log("completeRes: ", res.data);
+    }).catch((e) => {
+        console.log("error:", e);
+    });
+   
+
+    // (14) MS Verified ID が Authenticator に署名済みの VC を送信します。
+
+    // (15) Authenticator から MS Verified ID に issuance_successful の通知を送信します。
+    //   POST https://beta.did.msidentity.com/v1.0/xxxxxxxx-xxxx-xxxx-xxxxxxxxxxxx/verifiableCredentials/issuance
+
+
+    return requestData;
 }
 
 const generatePin = (digits) => {
@@ -146,5 +211,6 @@ module.exports = {
     issuanceResponse,
     issuanceRequestCallback,
     getManifest,
-    runRequestUri
+    runRequestUri,
+    issueCard
 };
