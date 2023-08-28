@@ -100,6 +100,11 @@ export default {
   padding-left: 10rem;
   padding-right: 10rem;
 
+  @media all and (max-width: 750px) {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
   @media all and (max-width: 450px) {
     padding-left: 0px;
     padding-right: 0px;
