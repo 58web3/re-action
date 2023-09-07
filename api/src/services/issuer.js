@@ -26,7 +26,7 @@ const issuanceRequest = async function (req, res) {
     }
 
     issuanceConfig.authority = azureConfig.AppSettings["IssuerAuthority"]
-    issuanceConfig.callback.url = `https://${req.hostname}/v1/issuer/issuance-request-callback`;
+    //issuanceConfig.callback.url = `https://${req.hostname}/v1/issuer/issuance-request-callback`;
     // modify payload with new state, the state is used to be able to update the UI when callbacks are received from the VC Service
     const id = uuid.v4();
     await VCCallbackModel.upsertVCCallback(id, {}, 'issuer');
@@ -43,14 +43,23 @@ const issuanceRequest = async function (req, res) {
         }
     }
     // here you could change the payload manifest and change the firstname and lastname
-    if (issuanceConfig.claims) {
-        if (issuanceConfig.claims.given_name) {
-            issuanceConfig.claims.given_name = "Megan";
-        }
-        if (issuanceConfig.claims.family_name) {
-            issuanceConfig.claims.family_name = "Bowen";
-        }
+    if (!issuanceConfig.claims) {
+        issuanceConfig.claims = {};
     }
+    if (req.body.first_name) {
+        issuanceConfig.claims.first_name = req.body.first_name;
+    }
+    if (req.body.last_name) {
+        issuanceConfig.claims.last_name = req.body.last_name
+    }
+    if (req.body.email) {
+        issuanceConfig.claims.email = req.body.email
+    }
+    if (req.body.wallet_address) {
+        issuanceConfig.claims.wallet_address = req.body.wallet_address
+    }
+
+    console.log(issuanceConfig);
 
     const msIdentityHostName = "https://verifiedid.did.msidentity.com/v1.0/";
     const client_api_request_endpoint = `${msIdentityHostName}verifiableCredentials/createIssuanceRequest`;
@@ -70,6 +79,7 @@ const issuanceRequest = async function (req, res) {
     const response = await fetch(client_api_request_endpoint, fetchOptions);
     const resp = await response.json()
     resp.id = id;                              // add session id so browser can pull status
+    resp.pinCode = issuanceConfig.pin.value;
 
     return resp;
 }
