@@ -138,4 +138,16 @@ export default {
   padding: 2rem;
   border-radius: 5px;
 }
+
+.forms input {
+  width: 100%;
+}
+
+.wrap-info {
+  width: 100%;
+}
+
+.wrap-info .wrap-content-item {
+  width: 100%;
+}
 </style>

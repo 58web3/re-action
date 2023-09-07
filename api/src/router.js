@@ -83,7 +83,7 @@ router.post(
 );
 
 // Request Issuing VC
-router.get(
+router.post(
   "/issuer/issuance-request",
   verifyIdToken,
   issuer.issuanceRequest
