@@ -1,4 +1,4 @@
-global.dynamoose = require('../../src/init_dynamoose');
+global.dynamoose = require('../../src/init_dynamoose').dynamoose;
 
 const testUserId = 'user12345';
 const testTokenAddress = '0x00c5496aEe77C1bA1f0854206A26DdA82a81D6D8';

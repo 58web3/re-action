@@ -1,4 +1,4 @@
-# Re:NFT
+# ReAction
 
 ## Config frontend .env
 - cd frontend
@@ -24,7 +24,7 @@ docker-compose down
 
 ## Deploy localhost API for frontend development
 ### Build docker image for localhost API
-- back to `re_nft` directory
+- back to `re-action` directory
 - build docker image
 ```
 docker-compose build
@@ -52,7 +52,7 @@ http://localhost:8080/
 
 ## Deploy development
 ## Build for development
-- back to `re_nft` directory
+- back to `re-action` directory
 - build docker image
 ```
 docker-compose -f ./docker-compose-prod.yml build
@@ -61,7 +61,7 @@ docker-compose -f ./docker-compose-prod.yml build
 
 ## Build staging
 ## Build for staging
-- back to `re_nft` directory
+- back to `re-action` directory
 - build docker image
 ```
 docker-compose -f ./docker-compose-prod.yml build
@@ -73,7 +73,7 @@ docker-compose -f ./docker-compose-prod.yml build
 - Frontend: frontend/.env.production
 - Batch: batch/.env
 ### Build for production
-- back to `re_nft` directory
+- back to `re-action` directory
 - build docker image
 ```
 docker-compose -f ./docker-compose-prod.yml build
@@ -91,18 +91,18 @@ ssh -i ~/.ssh/renft-development.pem ec2-user@{Bastion IP}
 ## Update Frontend and backend code and deploy
 ```
 # Move to the git repository directory
-[ec2-user@bastion ~]$ cd re_nft/
+[ec2-user@bastion ~]$ cd re-action/
 
 # Pull the latest code in the develop branch
-[ec2-user@bastion re_nft]$ git checkout develop
-[ec2-user@bastion re_nft]$ git pull
+[ec2-user@bastion re-action]$ git checkout develop
+[ec2-user@bastion re-action]$ git pull
 
 # Copy the configuration file
-[ec2-user@bastion re_nft]$ cp ~/bak/api/.env.development ~/re_nft/api/
-[ec2-user@bastion re_nft]$ cp ~/bak/frontend/.env.development ~/re_nft/frontend/
+[ec2-user@bastion re-action]$ cp ~/bak/api/.env.development ~/re-action/api/
+[ec2-user@bastion re-action]$ cp ~/bak/frontend/.env.development ~/re-action/frontend/
 
 # Run deployment
-[ec2-user@bastion re_nft]$ cd ~/re_nft/aws_infra/
+[ec2-user@bastion re-action]$ cd ~/re-action/aws_infra/
 [ec2-user@bastion aws_infra]$ ./dev-deploy.sh
 ```
 

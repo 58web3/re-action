@@ -154,5 +154,17 @@
     "about_nft": "About NFT",
     "faq_nft": "FAQs about receiving NFTs",
     "faq_connect_astar": "How to connect to Astar Network",
-    "faq_nft_community": "Invitation to NFT holders' community"
+    "faq_nft_community": "Invitation to NFT holders' community",
+    "issue_did": "Issue DID",
+    "correct_did":"Correct. Issue DID",
+    "back":"Back",
+    "prevent_close_window":"Do not close the window",
+    "did_issue":"Your DID  is issue successfully",
+    "post_media_success":"Your media is posted issue successfully",
+    "vc_issue_success":"Your VC  is Issue successfully",
+    "post_image":"Post Image",
+    "post_media":"Post Media",
+    "choose_other_image":"Choose other media",
+    "issue_vc":"Issue VC"
+
 }

@@ -1,4 +1,4 @@
-global.dynamoose = require('../../src/init_dynamoose');
+global.dynamoose = require('../../src/init_dynamoose').dynamoose;
 
 jest.mock('uuid');
 const DonorModel = require("../../src/models/donor");

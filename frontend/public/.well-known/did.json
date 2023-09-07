@@ -1,0 +1,48 @@
+{
+  "id": "did:web:web-app.ngrok.app",
+  "@context": [
+    "https://www.w3.org/ns/did/v1",
+    {
+      "@base": "did:web:web-app.ngrok.app"
+    }
+  ],
+  "service": [
+    {
+      "id": "#linkeddomains",
+      "type": "LinkedDomains",
+      "serviceEndpoint": {
+        "origins": [
+          "https://web-app.ngrok.app/"
+        ]
+      }
+    },
+    {
+      "id": "#hub",
+      "type": "IdentityHub",
+      "serviceEndpoint": {
+        "instances": [
+          "https://hub.did.msidentity.com/v1.0/766072a8-e18b-4139-b3f4-4bbc875ff40b"
+        ]
+      }
+    }
+  ],
+  "verificationMethod": [
+    {
+      "id": "#d1e421a194e143cfb98b95a6f7668e5fvcSigningKey-ee1d5",
+      "controller": "did:web:web-app.ngrok.app",
+      "type": "EcdsaSecp256k1VerificationKey2019",
+      "publicKeyJwk": {
+        "crv": "secp256k1",
+        "kty": "EC",
+        "x": "IINICWTzE17tea8x327kxDDtrb2AX454GRsqDzYsA8g",
+        "y": "kVn5j_T7tlAaNwk2r_C1CwtSr8gVb9K1ooMHY_zCC-4"
+      }
+    }
+  ],
+  "authentication": [
+    "#d1e421a194e143cfb98b95a6f7668e5fvcSigningKey-ee1d5"
+  ],
+  "assertionMethod": [
+    "#d1e421a194e143cfb98b95a6f7668e5fvcSigningKey-ee1d5"
+  ]
+}

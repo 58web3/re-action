@@ -3,22 +3,28 @@
     <div class="card-image" v-if="!loaded">
       <Loading class="m-auto mt-5"></Loading>
     </div>
-    <img
-      :src="image"
-      class="card-image"
-      v-show="loaded"
-      @load="imgLoaded()"
-      @error="imgLoaded()"
-    />
+    <div class="wrap-image">
+      <img
+        :src="image"
+        class="card-image"
+        v-show="loaded"
+        @load="imgLoaded()"
+        @error="imgLoaded()"
+      />
+    </div>
     <div class="category">{{ token.name }}</div>
     <div class="heading">Token Address:</div>
     <div class="heading">{{ reduceWallet(token.token_address) }}</div>
     <div class="heading mt-1">Token ID:</div>
     <div class="heading">{{ token.token_id }}</div>
+    <VButton :text="$t('issue_did')" @click="handleIssueDid" />
+    <VButton :text="$t('issue_vc')" @click="handleIssueVC" class="mt-2" type />
+    <VButton :text="$t('post')" @click="$emit('bottomSheet')" class="mt-2" />
   </div>
 </template>
 
 <script>
+import VButton from "@/components/Button.vue";
 import Loading from "@/components/Loading.vue";
 
 export default {
@@ -26,14 +32,26 @@ export default {
   props: {
     token: Object,
   },
-  components: { Loading },
+  components: { Loading, VButton },
   data() {
     return {
       image: null,
       loaded: false,
+      showModal: false,
+      modal: "",
+      isLoading: false,
     };
   },
   methods: {
+    handleIssueDid() {
+      this.$emit("openIssueDid");
+    },
+    handleIssueVC() {
+      this.$emit("openVC");
+    },
+    close() {
+      this.showModal = false;
+    },
     reduceWallet(wallet) {
       return wallet.substr(-42, 10) + "..." + wallet.substr(-4, 4);
     },
@@ -50,7 +68,7 @@ export default {
 <style scoped lang="scss">
 .card {
   max-width: 165px;
-  height: 274px;
+  height: auto;
   background: none;
   border: none !important;
   margin: 25px;
@@ -58,7 +76,7 @@ export default {
     max-width: 140px;
   }
 }
-.card-image {
+.wrap-image {
   width: 180px;
   height: 180px;
   margin-bottom: 10px;
@@ -66,6 +84,9 @@ export default {
     width: 140px;
     height: 140px;
   }
+}
+.card-image {
+  width: 100%;
 }
 
 .card-image:hover {
