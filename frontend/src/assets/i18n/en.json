@@ -165,6 +165,6 @@
     "post_image":"Post Image",
     "post_media":"Post Media",
     "choose_other_image":"Choose other media",
-    "issue_vc":"Issue VC"
-
+    "issue_vc":"Issue VC",
+    "please-scan-using-authenticator": "Please scan using Authenticator"
 }

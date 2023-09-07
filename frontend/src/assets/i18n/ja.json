@@ -164,6 +164,7 @@
     "issue_did": "Issue DID",
     "post_image":"Post Image",
     "post_media":"Post Media",
-    "post_media_success":"Your media is posted issue successfully"
-
+    "post_media_success":"Your media is posted issue successfully",
+    "choose_other_image":"Choose other media",
+    "please-scan-using-authenticator": "Please scan using Authenticator"
 }

@@ -2,22 +2,26 @@
   <ModalTemplate @close="$emit('close')">
     <div class="container-modal">
       <h3>Post Media</h3>
+      <div v-if="step === 0 && qrCode">
+        <img :src="qrCode" />
+        <p>{{ this.$t("please-scan-using-authenticator") }}</p>
+      </div>
       <div v-if="step === 1" class="d-flex flex-column">
         <div class="row">
-          <div class="col-6 d-flex justify-content-end">File Name</div>
-          <div class="col-6 d-flex justify-content-start">
+          <div class="col-4 d-flex justify-content-end">File Name:</div>
+          <div class="col-8 d-flex justify-content-start">
             {{ name }}
           </div>
         </div>
         <div class="row">
-          <div class="col-6 d-flex justify-content-end">Media Type</div>
-          <div class="col-6 d-flex justify-content-start">
+          <div class="col-4 d-flex justify-content-end">Media Type:</div>
+          <div class="col-8 d-flex justify-content-start">
             {{ type }}
           </div>
         </div>
         <div class="row">
-          <div class="col-6 d-flex justify-content-end">Size</div>
-          <div class="col-6 d-flex justify-content-start">
+          <div class="col-4 d-flex justify-content-end">Size:</div>
+          <div class="col-8 d-flex justify-content-start">
             {{ size }}
           </div>
         </div>
@@ -49,6 +53,8 @@ import ModalLoading from "@/components/PostMedia/ModalLoading";
 import ModalTemplate from "@/components/ModalTemplate";
 import ErrorMessage from "@/components/UIComponent/ErrorMessage";
 import { emailRegex } from "@/utils/validations";
+import axiosService from "@/services/axiosServices";
+import { API_ENDPOINT } from "@/constants/api";
 
 export default {
   name: "ModalPostMedia",
@@ -82,6 +88,8 @@ export default {
       step: 1,
       showSpinner: false,
       MySelectedValues: [],
+      qrCode: null,
+      message: "",
     };
   },
   methods: {
@@ -89,7 +97,48 @@ export default {
       this.$emit("close");
       this.step = 1;
     },
-    confirmInfo() {
+    async confirmInfo() {
+      const res = await axiosService.get(
+        `${API_ENDPOINT}/v1/verifier/presentation-request`
+      );
+      const resData = res.data;
+      console.log(resData);
+      const id = resData.data.id;
+      this.qrCode = resData.data.qrCode;
+      this.step = 0;
+      if (this.qrCode) {
+        // check status
+        const interval = setInterval(async () => {
+          const checkRes = await axiosService.get(
+            `${API_ENDPOINT}/v1/verifier/presentation-response?id=${id}`
+          );
+          const checkResData = checkRes.data;
+          console.log(checkResData);
+          if (checkResData.data.requestStatus === "presentation_verified") {
+            clearInterval(interval);
+            this.message = checkResData.data.message;
+
+            setTimeout(() => {
+              this.$emit("close");
+              this.$swal({
+                title: this.$t("post_media"),
+                text: this.message,
+                position: "center",
+                icon: "success",
+              });
+              //this.step = 1;
+
+              // Post media
+              
+
+            }, 2000);
+          } else if (checkResData.data.requestStatus === "request_retrieved") {
+            this.message = checkResData.data.message;
+          }
+        }, 5000);
+      }
+
+      /*
       this.step = 2;
       setTimeout(() => {
         this.step = 3;
@@ -102,7 +151,7 @@ export default {
           icon: "success",
         });
         this.$emit("close");
-      }, 6000);
+      }, 6000);*/
     },
     handleChooseImage() {
       this.$emit("chooseImage");
