@@ -1,3 +1,31 @@
-const { createPage } = require('../services/notion'); 
+const UserService = require("../services/user");
+const { createPage } = require('../services/notion');
 
-createPage('title', 'url', 'contributor', 'waddress');
+const createNotionPage = async function (req, res) {
+    try {
+        const publicKey = req.user.wallets[0].public_key;
+        const userWallet = await UserService.getUserWalletByPublicKey(publicKey);
+        if (!userWallet) {
+            return res.status(404).json({
+                message: "User Wallet Not Found"
+            });
+        }
+
+        console.log(req.body);
+
+        createPage(req.body.title, req.body.url, "", userWallet.wallet_address);
+
+        if (!userWallet) {
+            return res.status(404).json({
+                message: "User Wallet Not Found"
+            });
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+
+module.exports = {
+    createNotionPage,
+};
