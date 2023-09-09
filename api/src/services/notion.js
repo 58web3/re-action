@@ -2,7 +2,10 @@ const { Client } = require('@notionhq/client')
 
 const notion = new Client({ auth: process.env.NOTION_KEY })
 
-const createPage = async (title, url, contributor, walletAddress) => {
+const createPage = async (file, title, url, contributor, walletAddress) => {
+
+  const originalname = file.originalname;
+  const mimetype = file.mimetype;
 
   const requestBody = {
     "parent": {
@@ -71,6 +74,8 @@ const createPage = async (title, url, contributor, walletAddress) => {
   const response = await notion.pages.create(requestBody);
 
   console.log(response);
+
+  return response.url;
 
 }
 

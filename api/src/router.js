@@ -8,6 +8,8 @@ const login = require("./controllers/login");
 const issuer = require("./controllers/issuer");
 const verifier = require("./controllers/verifier");
 const notion = require("./controllers/notion");
+const multer = require("multer");
+const upload = multer();
 
 const { validator } = require("./middlewares/validator");
 const { verifyCSRFToken } = require("./middlewares/verify_csrf_token");
@@ -139,6 +141,7 @@ router.post(
     "/upload-media",
     verifyIdToken,
     verifyCSRFToken,
+    upload.single("file"),
     notion.createNotionPage
 );
 
