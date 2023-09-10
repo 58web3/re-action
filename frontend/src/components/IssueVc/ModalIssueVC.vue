@@ -20,6 +20,7 @@
         </div>
         <div v-else-if="step === 2">
           <img :src="qrCode">
+          <p>{{ this.$t("please-scan-using-authenticator") }}</p>
           <p>Pin Code: {{ this.pinCode }}</p>
           <p>Message: {{ this.message }}</p>
         </div>
@@ -53,6 +54,10 @@ import ErrorMessage from "@/components/UIComponent/ErrorMessage";
 import { emailRegex } from "@/utils/validations";
 import axiosService from "@/services/axiosServices";
 import { API_ENDPOINT } from "@/constants/api";
+import { EthrDID } from 'ethr-did';
+import { Resolver } from 'did-resolver'
+import { getResolver } from 'ethr-did-resolver'
+import jwtDecode from "jwt-decode";
 
 export default {
   name: "ModalIssueDid",
@@ -74,7 +79,8 @@ export default {
       walletCheck: false,
       qrCode: null,
       pinCode: null,
-      message: ''
+      message: '',
+      statusConfirmMax: 24
     };
   },
   methods: {
@@ -105,10 +111,17 @@ export default {
         include_qr_code: true,
       };
 
+      //const keypair = JSON.parse(localStorage.getItem('didKeypair'));
+      //const did = new EthrDID({...keypair});
+      //const didResolver = new Resolver(getResolver({ rpcUrl: process.env.VUE_APP_RPC_TARGET, name: "localhost"}));
+      //const userDidInfo = did.verifyJWT(localStorage.getItem('userDidInfo'), didResolver);
+      const userDidInfo = jwtDecode(localStorage.getItem('userDidInfo'));
+      console.log(userDidInfo);
+
       if (this.nameCheck) {
-        vcUserInfo.first_name = localStorage.getItem("first_name");
-        vcUserInfo.last_name = localStorage.getItem("last_name");
-        vcUserInfo.email = localStorage.getItem("email");
+        vcUserInfo.first_name = userDidInfo.firstName;
+        vcUserInfo.last_name = userDidInfo.last_name;
+        vcUserInfo.email = userDidInfo.email;
       }
 
       if (this.walletCheck) {
@@ -125,6 +138,8 @@ export default {
           this.qrCode = res.data.data.qrCode;
           this.pinCode = res.data.data.pinCode;
           const id = res.data.data.id;
+
+          let statusConfirmCount = 0;
 
           const interval = setInterval(async () => {
             const checkRes = await axiosService.get(`${API_ENDPOINT}/v1/issuer/issuance-response?id=${id}`);
@@ -150,21 +165,23 @@ export default {
               clearInterval(interval);
               this.message = checkResData.data.message;
             }
-          }, 5000);
-    
-        });
-      /*setTimeout(() => {
-        this.$emit("close");
-        this.$swal({
-          title: this.$t("issue_vc"),
-          text: this.$t("vc_issue_success"),
-          position: "center",
-          icon: "success",
-        });
-        this.step = 1;
-      }, 5000);
-      */
 
+            statusConfirmCount++;
+
+            if (statusConfirmCount >= this.statusConfirmMax) {
+              clearInterval(interval);
+
+              this.$emit("close");
+
+              this.$swal({
+                title: this.$t("issue_vc"),
+                text: this.$t("vc_issue_error"),
+                position: "center",
+                icon: "error",
+              });
+            }
+          }, 5000);
+        });
     },
   },
 };
