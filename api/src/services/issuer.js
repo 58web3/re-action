@@ -47,16 +47,16 @@ const issuanceRequest = async function (req, res) {
         issuanceConfig.claims = {};
     }
     if (req.body.first_name) {
-        issuanceConfig.claims.first_name = req.body.first_name;
+        issuanceConfig.claims.firstName = req.body.first_name;
     }
     if (req.body.last_name) {
-        issuanceConfig.claims.last_name = req.body.last_name
+        issuanceConfig.claims.lastName = req.body.last_name
     }
     if (req.body.email) {
         issuanceConfig.claims.email = req.body.email
     }
     if (req.body.wallet_address) {
-        issuanceConfig.claims.wallet_address = req.body.wallet_address
+        issuanceConfig.claims.walletAddress = req.body.wallet_address
     }
 
     console.log(issuanceConfig);

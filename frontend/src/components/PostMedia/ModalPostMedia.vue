@@ -1,12 +1,13 @@
 <template>
   <ModalTemplate @close="$emit('close')">
     <div class="container-modal">
-      <h3>Post Media</h3>
       <div v-if="step === 0 && qrCode">
+        <h3>Verifiable credentials</h3>
         <img :src="qrCode" />
         <p>{{ this.$t("please-scan-using-authenticator") }}</p>
       </div>
       <div v-if="step === 1" class="d-flex flex-column">
+        <h3>Post Media</h3>
         <div class="row">
           <div class="col-4 d-flex justify-content-end">File Name:</div>
           <div class="col-8 d-flex justify-content-start">
@@ -91,6 +92,7 @@ export default {
       mediaFile: null,
       qrCode: null,
       message: "",
+      statusConfirmMax: 12
     };
   },
   methods: {
@@ -107,6 +109,8 @@ export default {
       const id = resData.data.id;
       this.qrCode = resData.data.qrCode;
       this.step = 0;
+
+      let statusConfirmCount = 0;
       if (this.qrCode) {
         // check status
         const interval = setInterval(async () => {
@@ -127,7 +131,6 @@ export default {
                 position: "center",
                 icon: "success",
               });
-              //this.step = 1;
 
               // Post media
               this.$emit("postMedia");
@@ -136,23 +139,25 @@ export default {
           } else if (checkResData.data.requestStatus === "request_retrieved") {
             this.message = checkResData.data.message;
           }
+
+          statusConfirmCount++;
+
+          if (statusConfirmCount >= this.statusConfirmMax) {
+            clearInterval(interval);
+
+            // close
+            this.$emit("close");
+
+            // error
+            this.$swal({
+                title: this.$t("post_media"),
+                text: this.$t("vp-confirm-error"),
+                position: "center",
+                icon: "error",
+              });
+          }
         }, 5000);
       }
-
-      /*
-      this.step = 2;
-      setTimeout(() => {
-        this.step = 3;
-      }, 5000);
-      setTimeout(() => {
-        this.$swal({
-          title: this.$t("post_media"),
-          text: this.$t("post_media_success"),
-          position: "center",
-          icon: "success",
-        });
-        this.$emit("close");
-      }, 6000);*/
     },
     handleChooseImage() {
       this.$emit("chooseImage");
