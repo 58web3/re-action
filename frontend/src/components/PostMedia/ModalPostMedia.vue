@@ -88,6 +88,7 @@ export default {
       step: 1,
       showSpinner: false,
       MySelectedValues: [],
+      mediaFile: null,
       qrCode: null,
       message: "",
     };
@@ -129,7 +130,7 @@ export default {
               //this.step = 1;
 
               // Post media
-              
+              this.$emit("postMedia");
 
             }, 2000);
           } else if (checkResData.data.requestStatus === "request_retrieved") {
