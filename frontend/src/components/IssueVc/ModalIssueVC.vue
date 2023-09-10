@@ -54,6 +54,10 @@ import ErrorMessage from "@/components/UIComponent/ErrorMessage";
 import { emailRegex } from "@/utils/validations";
 import axiosService from "@/services/axiosServices";
 import { API_ENDPOINT } from "@/constants/api";
+import { EthrDID } from 'ethr-did';
+import { Resolver } from 'did-resolver'
+import { getResolver } from 'ethr-did-resolver'
+import jwtDecode from "jwt-decode";
 
 export default {
   name: "ModalIssueDid",
@@ -107,10 +111,17 @@ export default {
         include_qr_code: true,
       };
 
+      //const keypair = JSON.parse(localStorage.getItem('didKeypair'));
+      //const did = new EthrDID({...keypair});
+      //const didResolver = new Resolver(getResolver({ rpcUrl: process.env.VUE_APP_RPC_TARGET, name: "localhost"}));
+      //const userDidInfo = did.verifyJWT(localStorage.getItem('userDidInfo'), didResolver);
+      const userDidInfo = jwtDecode(localStorage.getItem('userDidInfo'));
+      console.log(userDidInfo);
+
       if (this.nameCheck) {
-        vcUserInfo.first_name = localStorage.getItem("first_name");
-        vcUserInfo.last_name = localStorage.getItem("last_name");
-        vcUserInfo.email = localStorage.getItem("email");
+        vcUserInfo.first_name = userDidInfo.firstName;
+        vcUserInfo.last_name = userDidInfo.last_name;
+        vcUserInfo.email = userDidInfo.email;
       }
 
       if (this.walletCheck) {

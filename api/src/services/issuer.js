@@ -43,9 +43,8 @@ const issuanceRequest = async function (req, res) {
         }
     }
     // here you could change the payload manifest and change the firstname and lastname
-    if (!issuanceConfig.claims) {
-        issuanceConfig.claims = {};
-    }
+    issuanceConfig.claims = {};
+
     if (req.body.first_name) {
         issuanceConfig.claims.firstName = req.body.first_name;
     }

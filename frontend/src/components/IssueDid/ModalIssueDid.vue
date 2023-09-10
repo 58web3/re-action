@@ -70,6 +70,9 @@ import ModalLoading from "@/components/IssueDid/ModalLoading";
 import ModalTemplate from "@/components/ModalTemplate";
 import ErrorMessage from "@/components/UIComponent/ErrorMessage";
 import { emailRegex } from "@/utils/validations";
+import { EthrDID } from 'ethr-did';
+import Web3 from 'web3';
+import { ethers } from 'ethers';
 
 export default {
   name: "ModalIssueDid",
@@ -96,19 +99,22 @@ export default {
   },
   methods: {
     confirmInfo() {
-      console.log("asdkalsjdkals");
       if (this.firstName === "") {
         this.validationErrorFirstName = "First name is required";
       } else if (this.lastName === "") {
         this.validationErrorLastName = "Last name is required";
-      } else if (!this.emailRegex().test(this.email)) {
+      } else if (this.email && !this.emailRegex().test(this.email)) {
         this.validationErrorEmail = "Incorrect email format";
       } else {
         this.step = 2;
       }
     },
-    requestDID() {
+    async requestDID() {
       this.step = 3;
+
+      // save to localstorage
+      await this.generateAndEncrypt(this.lastName, this.firstName, this.email);
+
       setTimeout(() => {
         this.$emit("close");
         this.$swal({
@@ -119,7 +125,7 @@ export default {
         });
         this.step = 1;
         (this.firstName = ""), (this.lastName = ""), (this.email = "");
-      }, 5000);
+      }, 2000);
     },
     handleBack() {
       this.step = 1;
@@ -129,7 +135,18 @@ export default {
       this.step = 1;
       (this.firstName = ""), (this.lastName = ""), (this.email = "");
     },
-  },
+    async generateAndEncrypt(lastName, firstName, email) {
+
+      const keypair = EthrDID.createKeyPair()
+      const ethrDid = new EthrDID({...keypair});
+
+      const userJwt = await ethrDid.signJWT({lastName: lastName, firstName: firstName, email: email})
+
+      localStorage.setItem('didKeypair', JSON.stringify(keypair));
+      localStorage.setItem('did', JSON.stringify(ethrDid));
+      localStorage.setItem('userDidInfo', userJwt);
+    },
+  }
 };
 </script>
 <style>
