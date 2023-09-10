@@ -82,6 +82,7 @@ export default {
       step: 1,
       showSpinner: false,
       MySelectedValues: [],
+      mediaFile: null,
     };
   },
   methods: {
@@ -90,19 +91,10 @@ export default {
       this.step = 1;
     },
     confirmInfo() {
-      this.step = 2;
-      setTimeout(() => {
-        this.step = 3;
-      }, 5000);
-      setTimeout(() => {
-        this.$swal({
-          title: this.$t("post_media"),
-          text: this.$t("post_media_success"),
-          position: "center",
-          icon: "success",
-        });
-        this.$emit("close");
-      }, 6000);
+      this.$emit("postMedia");
+
+      this.$emit("close");
+      this.step = 1;
     },
     handleChooseImage() {
       this.$emit("chooseImage");

@@ -117,6 +117,7 @@
     :size="sizeFile"
     @close="close"
     @chooseImage="handleChooseMedia"
+    @postMedia="postMedia"
   />
   <bottom-sheet :defaultState="sheetState" @setState="setState()">
     <div style="padding-left: 10px; padding-right: 10px">
@@ -310,6 +311,26 @@ export default defineComponent({
         this.showSpinner = false;
       }
     },
+    async postMedia() {
+      console.log(this.imageinfo);
+
+      // csrf
+      await axiosService.refreshCsrfToken();
+
+      // upload
+      const formData = new FormData();
+      formData.append("title", this.nameFile);
+      formData.append("file", this.imageinfo as any);
+      const uploadRes = await axiosService.uploadFile(`${API_ENDPOINT}/v1/upload-media`, formData);
+      console.log(uploadRes.data);
+
+      this.$swal({
+        title: this.$t("post_media"),
+        text: this.$t("post_media_success"),
+        position: "center",
+        icon: "success",
+      });
+    }
   },
 });
 </script>
