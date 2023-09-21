@@ -120,7 +120,7 @@ export default {
 
       if (this.nameCheck) {
         vcUserInfo.first_name = userDidInfo.firstName;
-        vcUserInfo.last_name = userDidInfo.last_name;
+        vcUserInfo.last_name = userDidInfo.lastName;
         vcUserInfo.email = userDidInfo.email;
       }
 
