@@ -92,7 +92,7 @@ export default {
       mediaFile: null,
       qrCode: null,
       message: "",
-      statusConfirmMax: 12
+      statusConfirmMax: 12,
     };
   },
   methods: {
@@ -101,6 +101,9 @@ export default {
       this.step = 1;
     },
     async confirmInfo() {
+
+      await this.getGeoInfo();
+
       const res = await axiosService.get(
         `${API_ENDPOINT}/v1/verifier/presentation-request`
       );
@@ -175,6 +178,21 @@ export default {
         this.step = 1;
       }, 5000);
     },
+    async getGeoInfo() {
+      const options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0,
+      };
+      navigator.geolocation.getCurrentPosition(this.geoSsuccess, this.geoError, options);
+    },
+    geoSsuccess(pos) {
+      console.log(pos.coords);
+      this.$emit("setCoords", pos.coords.latitude, pos.coords.longitude);
+    },
+    geoError(err) {
+      console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
   },
 };
 </script>

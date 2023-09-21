@@ -118,6 +118,7 @@
     @close="close"
     @chooseImage="handleChooseMedia"
     @postMedia="postMedia"
+    @setCoords="setCoords"
   />
   <bottom-sheet :defaultState="sheetState" @setState="setState()">
     <div style="padding-left: 10px; padding-right: 10px">
@@ -176,6 +177,8 @@ export default defineComponent({
       nameFile: "",
       typeFile: "",
       sizeFile: "",
+      latitude: "",
+      longitude: ""
     };
   },
   async mounted() {
@@ -321,6 +324,8 @@ export default defineComponent({
       const formData = new FormData();
       formData.append("title", this.nameFile);
       formData.append("file", this.imageinfo as any);
+      formData.append("latitude", this.latitude);
+      formData.append("longitude", this.longitude);
       const uploadRes = await axiosService.uploadFile(`${API_ENDPOINT}/v1/upload-media`, formData);
       console.log(uploadRes.data);
 
@@ -330,6 +335,10 @@ export default defineComponent({
         position: "center",
         icon: "success",
       });
+    },
+    setCoords(latitude : any, longitude : any) {
+      this.latitude = latitude;
+      this.longitude = longitude;
     }
   },
 });

@@ -11,7 +11,7 @@ const createNotionPage = async function (req, res) {
             });
         }
 
-        const url = await createPage(req.file, req.body.title, req.body.url, "", userWallet.wallet_address);
+        const url = await createPage(req.file, req.body.title, req.body.url, "", userWallet.wallet_address, req.body.latitude, req.body.longitude);
 
         if (!userWallet) {
             return res.status(404).json({

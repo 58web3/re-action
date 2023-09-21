@@ -20,7 +20,7 @@ const s3 = process.env.USE_ACCESS_KEY === 'true' ?
 
 console.log(s3)
 
-const createPage = async (file, title, url, contributor, walletAddress) => {
+const createPage = async (file, title, url, contributor, walletAddress, latitude, longitude) => {
 
   const originalname = file.originalname;
   const mimetype = file.mimetype;
@@ -37,6 +37,8 @@ const createPage = async (file, title, url, contributor, walletAddress) => {
     },
   };
 
+  const googleMapURL = `https://www.google.com/maps/embed/v1/place?key=${process.env.GOOGLE_MAP_API_KEY}&q=${latitude},${longitude}`;
+
   const children = [];
   children.push({
     "heading_2": {
@@ -48,7 +50,34 @@ const createPage = async (file, title, url, contributor, walletAddress) => {
         }
       ]
     }
-  });
+  },
+  {
+  "heading_3": {
+    "rich_text": [
+      {
+        "text": {
+          "content": "User location"
+        }
+      }
+    ]
+  }},
+  {
+    "object": "block",
+    "type": "embed",
+    "embed": {
+        "url": googleMapURL
+    }
+  },
+  {
+  "heading_3": {
+    "rich_text": [
+      {
+        "text": {
+          "content": "User Media"
+        }
+      }
+    ]
+  }});
 
   try {
     const res = await s3.send(new AWS.PutObjectCommand(params));
