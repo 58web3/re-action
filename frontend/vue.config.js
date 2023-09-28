@@ -4,6 +4,9 @@ const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 module.exports = defineConfig({
   devServer: {
     allowedHosts: 'all',
+    client: {
+      webSocketURL: 'auto://0.0.0.0:0/ws'
+    }
   },
   transpileDependencies: true,
   lintOnSave: false,
