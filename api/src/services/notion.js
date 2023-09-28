@@ -82,26 +82,27 @@ const createPage = async (file, title, url, contributor, walletAddress, latitude
   try {
     const res = await s3.send(new AWS.PutObjectCommand(params));
 
-    if (key.endsWith(".png") || key.endsWith(".jpg") || key.endsWith(".jpeg") || key.endsWith(".gif") || key.endsWith(".svg")) {
+    const lowerKey = key.toLowerCase();
+    if (lowerKey.endsWith(".png") || lowerKey.endsWith(".jpg") || lowerKey.endsWith(".jpeg") || lowerKey.endsWith(".gif") || lowerKey.endsWith(".svg")) {
       children.push(
         {
           "type": "image",
           "image": {
             "type": "external",
             "external": {
-              "url": "https://" + AWS_S3_BUCKET + ".s3.ap-northeast-1.amazonaws.com/" + key
+              "url": "https://" + AWS_S3_BUCKET + ".s3.ap-northeast-1.amazonaws.com/" + encodeURIComponent(key)
             }
           }
         }
       );
-    } else if (key.endsWith(".mov") || key.endsWith(".mp4") || key.endsWith(".webm")) {
+    } else if (lowerKey.endsWith(".mov") || lowerKey.endsWith(".mp4") || lowerKey.endsWith(".webm")) {
       children.push(
         {
           "type": "video",
           "video": {
             "type": "external",
             "external": {
-              "url": "https://" + AWS_S3_BUCKET + ".s3.ap-northeast-1.amazonaws.com/" + key
+              "url": "https://" + AWS_S3_BUCKET + ".s3.ap-northeast-1.amazonaws.com/" + encodeURIComponent(key)
             }
           }
         }
@@ -113,7 +114,7 @@ const createPage = async (file, title, url, contributor, walletAddress, latitude
           "file": {
             "type": "external",
             "external": {
-              "url": "https://" + AWS_S3_BUCKET + ".s3.ap-northeast-1.amazonaws.com/" + key
+              "url": "https://" + AWS_S3_BUCKET + ".s3.ap-northeast-1.amazonaws.com/" + encodeURIComponent(key)
             }
           }
         }
