@@ -38,7 +38,7 @@ const transfer = async (tokenAddress, receiveAddress, tokenId) => {
   // const gasLimit = await nftContract.methods
   //   .transferFrom(adminWalletAddress, receiveAddress, tokenId)
   //   .estimateGas({ from: adminWalletAddress });
-  const gasPrice = +(await web3.eth.getGasPrice()) * 1.4; // Increase gas price 40%
+  const gasPrice = Math.ceil(+(await web3.eth.getGasPrice()) * 1.4); // Increase gas price 40%
   const data = nftContract.methods
     .transferFrom(adminWalletAddress, receiveAddress, tokenId)
     .encodeABI();
@@ -101,7 +101,7 @@ const mint = async (contractAddress, userWallet, tokenId, tokenURI) => {
   }
   logger.info(`Admin wallet address: ${adminWalletAddress}`);
 
-  const gasPrice = +(await web3.eth.getGasPrice()) * 1.4; // Increase gas price 40%
+  const gasPrice = Math.ceil(+(await web3.eth.getGasPrice()) * 1.4); // Increase gas price 40%
   const data = nftContract.methods
     .mint(userWallet, tokenId, tokenURI)
     .encodeABI();
