@@ -39,7 +39,7 @@
     "superagent": "^8.0.0",
     "supertest": "^6.2.4",
     "uuid": "^8.3.2",
-    "web3": "^1.8.0"
+    "web3": "^1.10.1"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.21.2",

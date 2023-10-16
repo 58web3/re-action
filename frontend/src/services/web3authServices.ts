@@ -39,11 +39,11 @@ class Web3AuthServiceClass {
         chainId: process.env.VUE_APP_CHAIN_ID,
         rpcTarget: process.env.VUE_APP_RPC_TARGET,
       },
-      uiConfig: {
+      /*uiConfig: {
         loginMethodsOrder: ["google", "discord"],
-        appLogo: process.env.VUE_APP_W3A_LOGO_DARK,
+        //appLogo: process.env.VUE_APP_W3A_LOGO_DARK,
         defaultLanguage: sessionStorage.lang,
-      },
+      },*/
       storageKey: "session",
     });
     const openloginAdapter = new OpenloginAdapter({
@@ -51,12 +51,12 @@ class Web3AuthServiceClass {
         clientId: clientId,
         network: process.env.VUE_APP_MODE as any,
         uxMode: "popup",
-        whiteLabel: {
+        /*whiteLabel: {
           defaultLanguage: sessionStorage.lang,
-          name: process.env.VUE_APP_W3A_NAME,
+          //name: process.env.VUE_APP_W3A_NAME,
           logoLight: process.env.VUE_APP_W3A_LOGO_LIGHT,
           logoDark: process.env.VUE_APP_W3A_LOGO_DARK,
-        },
+        },*/
       },
       loginSettings: {
         mfaLevel: "default",
