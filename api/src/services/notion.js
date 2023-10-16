@@ -178,8 +178,12 @@ const createPage = async (file, title, url, contributor, walletAddress, latitude
     "children": children,
   };
 
-  const response = await notion.pages.create(requestBody);
-
+  let response = {};
+  try {
+	  response = await notion.pages.create(requestBody);
+  } catch (ex) {
+    console.log(ex);
+  }
   console.log(response);
 
   return response.url;
